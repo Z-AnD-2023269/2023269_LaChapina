@@ -21,7 +21,7 @@
             <Image url="@../images/Proveedores.png" />
          </image>
       </ImageView>
-      <GridPane layoutX="886.0" layoutY="277.0" prefHeight="417.0" prefWidth="236.0">
+      <GridPane layoutX="14.0" layoutY="263.0" prefHeight="417.0" prefWidth="166.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
          </columnConstraints>
@@ -32,7 +32,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregar" prefHeight="149.0" prefWidth="262.0" stylesheets="@../resource/LaChapinaCSS.css" text="Agregar" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
+            <Button fx:id="btnAgregarP" mnemonicParsing="false" onAction="#Agregar" prefHeight="149.0" prefWidth="262.0" stylesheets="@../resource/LaChapinaCSS.css" text="Agregar" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
                <graphic>
                   <ImageView fx:id="imgAgregar" fitHeight="59.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -48,7 +48,7 @@
                   <Insets />
                </GridPane.margin>
             </Button>
-            <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#Eliminar" onMouseClicked="#seleccionarElemento" prefHeight="119.0" prefWidth="267.0" stylesheets="@../resource/LaChapinaCSS.css" text="Eliminar" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" GridPane.rowIndex="1">
+            <Button fx:id="btnEliminarP" mnemonicParsing="false" onAction="#eliminar" onMouseClicked="#seleccionarElemento" prefHeight="133.0" prefWidth="221.0" stylesheets="@../resource/LaChapinaCSS.css" text="Eliminar" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" GridPane.rowIndex="1">
                <graphic>
                   <ImageView fx:id="imgEliminar" fitHeight="63.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -61,7 +61,7 @@
                   <String fx:value="button2" />
                </styleClass>
             </Button>
-            <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#Editar" prefHeight="115.0" prefWidth="267.0" stylesheets="@../resource/LaChapinaCSS.css" text="Editar" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" GridPane.rowIndex="2">
+            <Button fx:id="btnEditarP" mnemonicParsing="false" onAction="#editar" prefHeight="115.0" prefWidth="267.0" stylesheets="@../resource/LaChapinaCSS.css" text="Editar" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" GridPane.rowIndex="2">
                <graphic>
                   <ImageView fx:id="imgEditar" fitHeight="59.0" fitWidth="93.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -74,7 +74,7 @@
                   <String fx:value="button2" />
                </styleClass>
             </Button>
-            <Button fx:id="btnReporte" mnemonicParsing="false" onAction="#reporte" prefHeight="177.0" prefWidth="335.0" stylesheets="@../resource/LaChapinaCSS.css" text="Reporte" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" GridPane.rowIndex="3">
+            <Button fx:id="btnReportesP" mnemonicParsing="false" onAction="reportes" prefHeight="177.0" prefWidth="335.0" stylesheets="@../resource/LaChapinaCSS.css" text="Reporte" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" GridPane.rowIndex="3">
                <graphic>
                   <ImageView fx:id="imgReporte" fitHeight="62.0" fitWidth="122.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -89,7 +89,7 @@
             </Button>
          </children>
       </GridPane>
-      <GridPane layoutX="246.0" layoutY="21.0" prefHeight="159.0" prefWidth="455.0">
+      <GridPane layoutX="246.0" layoutY="21.0" prefHeight="171.0" prefWidth="455.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="178.0" minWidth="10.0" prefWidth="105.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="10.0" prefWidth="350.0" />
@@ -103,18 +103,18 @@
          </rowConstraints>
          <children>
             <Label prefHeight="17.0" prefWidth="60.0" text="Nombre" />
-            <TextField fx:id="txtNombreP" GridPane.columnIndex="1" />
+            <TextField fx:id="txtNombresP" GridPane.columnIndex="1" />
             <Label text="Pagina Web" GridPane.rowIndex="2" />
             <Label text="Apellido" GridPane.rowIndex="1" />
-            <TextField fx:id="txtApellidoP" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="txtPaginaWebP" prefHeight="25.0" prefWidth="249.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtApellidosP" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtSitioWeb" prefHeight="25.0" prefWidth="249.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Direccion" GridPane.rowIndex="3" />
             <TextField fx:id="txtDireccionP" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="Razon Social" GridPane.rowIndex="4" />
-            <TextField fx:id="txtRazonSocialP" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="txtRazonSocial" prefWidth="349.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
-      <GridPane layoutX="246.0" layoutY="185.0" prefHeight="67.0" prefWidth="455.0">
+      <GridPane layoutX="246.0" layoutY="192.0" prefHeight="67.0" prefWidth="455.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="111.0" />
@@ -128,22 +128,22 @@
          <children>
             <Label text="NIT" />
             <Label prefHeight="17.0" prefWidth="43.0" text="Codigo" GridPane.rowIndex="1" />
-            <TextField fx:id="txtNitP" GridPane.columnIndex="1" />
+            <TextField fx:id="txtNITP" GridPane.columnIndex="1" />
             <TextField fx:id="txtCodigoP" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label prefHeight="17.0" prefWidth="59.0" text="Contacto" GridPane.columnIndex="2" />
             <TextField fx:id="txtContactoP" GridPane.columnIndex="3" />
          </children>
       </GridPane>
-      <TableView fx:id="tblProveedores" layoutX="13.0" layoutY="299.0" onMouseClicked="#seleccionarElemento" prefHeight="357.0" prefWidth="853.0" stylesheets="@../resource/LaChapinaCSS.css">
+      <TableView fx:id="tvPoveedores" layoutX="188.0" layoutY="313.0" onMouseClicked="#seleccionarElemento" prefHeight="357.0" prefWidth="1000.0" stylesheets="@../resource/LaChapinaCSS.css">
          <columns>
-            <TableColumn fx:id="colCodigoP" prefWidth="75.0" text="codigoProveedor" />
-            <TableColumn fx:id="colNitP" prefWidth="111.0" text="NITproveedor" />
-            <TableColumn fx:id="colNombreP" prefWidth="111.0" text="nombreProveedor" />
-            <TableColumn fx:id="colApellidoP" prefWidth="111.0" text="apellidoProveedor" />
-            <TableColumn fx:id="colDireccionP" prefWidth="111.0" text="direccionProveedor" />
-            <TableColumn fx:id="colRazonSP" prefWidth="111.0" text="razonSocial" />
-            <TableColumn fx:id="colPaginaWebP" prefWidth="111.0" text="paginaWeb" />
-            <TableColumn fx:id="colContactoP" prefWidth="111.0" text="contactoPrincipal" />
+            <TableColumn fx:id="colCodP" minWidth="125.0" prefWidth="0.0" text="codigoProveedor" />
+            <TableColumn fx:id="colNITP" minWidth="125.0" prefWidth="0.0" text="NITproveedor" />
+            <TableColumn fx:id="colNomP" minWidth="125.0" prefWidth="0.0" text="nombreProveedor" />
+            <TableColumn fx:id="colApeP" minWidth="125.0" prefWidth="0.0" text="apellidoProveedor" />
+            <TableColumn fx:id="colDireP" minWidth="125.0" prefWidth="0.0" text="direccionProveedor" />
+            <TableColumn fx:id="colRazonSP" minWidth="125.0" prefWidth="0.0" text="razonSocial" />
+            <TableColumn fx:id="colContactoP" minWidth="125.0" prefWidth="0.0" text="paginaWeb" />
+            <TableColumn fx:id="colSitioWeb" minWidth="125.0" prefWidth="0.0" text="contactoPrincipal" />
          </columns>
       </TableView>
       <Button fx:id="btnRegresar" layoutX="1087.0" layoutY="703.0" mnemonicParsing="false" onAction="#clicRegresar" prefHeight="82.0" prefWidth="99.0" stylesheets="@../resource/LaChapinaCSS.css">

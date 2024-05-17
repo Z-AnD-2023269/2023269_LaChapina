@@ -82,7 +82,7 @@ public class Main extends Application {
     
     public void menuProgramador(){
         try{
-            MenuProgramadorController menuProgramadorView = (MenuProgramadorController)cambiarEscena("MenuProgramadorView.fxml", 1187,790);
+            MenuProgramadorController menuProgramadorView = (MenuProgramadorController)cambiarEscena("MenuProveedoresView.fxml", 1187,790);
             menuProgramadorView.setEscenarioPrincipal(this);
         }catch(Exception e){
             e.printStackTrace();
