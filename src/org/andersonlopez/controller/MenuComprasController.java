@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -27,6 +28,8 @@ public class MenuComprasController implements Initializable{
     private enum operaciones {AGREGAR, ELIMINAR, ACTUALIZAR, CANCELAR, NINGUNO}
         private operaciones tipoDeOperaciones = operaciones.NINGUNO;
         private ObservableList<Compras> ListarCompras;
+        
+    @FXML private DatePicker dpFechaDocumento;
     @FXML private Button btnRegresar;
     @FXML private TextField txtNumeroDocumento;
     @FXML private TextField txtFechaDocumento;
@@ -54,7 +57,7 @@ public class MenuComprasController implements Initializable{
     public void CargarDatos(){
         tblCompras.setItems(getCompras());
         colNumeroDocumento.setCellValueFactory (new PropertyValueFactory<Compras, Integer>("numeroDocumento"));
-        colFechaDocumento.setCellValueFactory (new PropertyValueFactory<Compras, String>("fechaDocumento"));
+        colFechaDocumento.setCellValueFactory (new PropertyValueFactory<Compras, Double>("fechaDocumento"));
         colDes.setCellValueFactory (new PropertyValueFactory<Compras, String>("descripcion"));
         colTotalDocumento.setCellValueFactory (new PropertyValueFactory<Compras, String>("totalDocumento"));
     }
@@ -63,20 +66,20 @@ public class MenuComprasController implements Initializable{
         txtNumeroDocumento.setText(String.valueOf(((Compras)tblCompras.getSelectionModel().getSelectedItem()).getClass()));
         txtFechaDocumento.setText(((Compras) tblCompras.getSelectionModel().getSelectedItem()).getFechaDocumento());
         txtDescripcion.setText(((Compras) tblCompras.getSelectionModel().getSelectedItem()).getDescripcion());
-        txtTotalDocumento.setText(((Compras) tblCompras.getSelectionModel().getSelectedItem()).getTotalDocumento());
+        txtTotalDocumento.setText(String.valueOf(((Compras) tblCompras.getSelectionModel().getSelectedItem()).getTotalDocumento()));
         
     }
     
     public ObservableList<Compras> getCompras(){
         ArrayList<Compras> lista = new ArrayList<>();
         try{
-            PreparedStatement procediiento = Conexion.getInstancia().getConexion().prepareCall("{call sp_ListarCompras()}");
+            PreparedStatement procediiento = Conexion.getInstancia().getConexion().prepareCall("{call sp_listarCompras()}");
             ResultSet resultado = procediiento.executeQuery();
             while(resultado.next()){
                 lista.add(new Compras (resultado.getInt("numeroDocumento"),
                                                         resultado.getString("fechaDocumento"),
                                                         resultado.getString("descripcion"),
-                                                        resultado.getString("totalDocumento")
+                                                        resultado.getDouble("totalDocumento")
 
                 ));
             }
@@ -115,21 +118,23 @@ public class MenuComprasController implements Initializable{
     public void guardar (){
         Compras registro = new Compras();
         registro.setNumeroDocumento(Integer.parseInt(txtNumeroDocumento.getText()));
+        registro.setFechaDocumento(dpFechaDocumento.getValue().toString());
         registro.setDescripcion(txtDescripcion.getText());
-        registro.setTotalDocumento(txtTotalDocumento.getText());
-       try{
-            PreparedStatement procedimiento = Conexion.getInstancia().getConexion().prepareCall ("{call sp_AgregarCompra(?, ?, ?)}");
+        registro.setTotalDocumento(Double.parseDouble(txtTotalDocumento.getText()));
+        try{
+            PreparedStatement procedimiento = Conexion.getInstancia().getConexion().prepareCall ("{call sp_editarCompra(?, ?, ?, ?)}");
             procedimiento.setInt(1, registro.getNumeroDocumento());
-            procedimiento.setString(2, registro.getDescripcion());
-            procedimiento.setString(3, registro.getTotalDocumento());
+            procedimiento.setString(2, registro.getFechaDocumento());
+            procedimiento.setString(3, registro.getDescripcion());
+            procedimiento.setDouble(4, registro.getTotalDocumento());
             procedimiento.execute();
             ListarCompras.add(registro);
-            
+
         } catch (Exception e){
             e.printStackTrace();
         }
-        
     }
+
     
     public void Eliminar(){
         switch(tipoDeOperaciones){
@@ -150,7 +155,7 @@ public class MenuComprasController implements Initializable{
                             "Eliminar Clientes", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if(respuesta == JOptionPane.YES_NO_OPTION){
                         try{
-                            PreparedStatement procedimiento = Conexion.getInstancia().getConexion().prepareCall(" {call sp_EliminarCompra(?)}");
+                            PreparedStatement procedimiento = Conexion.getInstancia().getConexion().prepareCall(" {call sp_eliminarCompra(?)}");
                             procedimiento.setInt(1, ((Compras) tblCompras.getSelectionModel().getSelectedItem()).getNumeroDocumento()); 
                             procedimiento.execute();
                             ListarCompras.remove (tblCompras.getSelectionModel().getSelectedItem());
@@ -200,11 +205,13 @@ public class MenuComprasController implements Initializable{
         try{
             PreparedStatement procedimiento = Conexion.getInstancia().getConexion().prepareCall(" {call sp_EditarCompra(?, ?, ?)}");
             Compras registro = (Compras) tblCompras.getSelectionModel().getSelectedItem();
+            registro.setFechaDocumento(dpFechaDocumento.getValue().toString());
             registro.setDescripcion(txtDescripcion.getText());
-            registro.setTotalDocumento(txtTotalDocumento.getText());
+            registro.setTotalDocumento(Double.parseDouble(txtTotalDocumento.getText()));
             procedimiento.setInt(1, registro.getNumeroDocumento());
-            procedimiento.setString(2, registro.getDescripcion());
-            procedimiento.setString(3, registro.getTotalDocumento());
+            procedimiento.setString(2, registro.getFechaDocumento());
+            procedimiento.setString(3, registro.getDescripcion());
+            procedimiento.setDouble(4, registro.getTotalDocumento());
             procedimiento.execute();
             
         }catch (Exception e) {
@@ -231,7 +238,7 @@ public class MenuComprasController implements Initializable{
     public void desactivarControles () {
         txtNumeroDocumento.setEditable (false);
         txtDescripcion.setEditable (false);
-        txtFechaDocumento.setEditable(false);
+        dpFechaDocumento.setEditable(false);
         txtTotalDocumento.setEditable(false);
         
     }
@@ -239,7 +246,7 @@ public class MenuComprasController implements Initializable{
     public void activarControles () {
         txtNumeroDocumento.setEditable (true);
         txtDescripcion.setEditable(true);
-        txtFechaDocumento.setEditable(true);
+        dpFechaDocumento.setEditable(true);
         txtTotalDocumento.setEditable(true);
         
     }
@@ -247,7 +254,6 @@ public class MenuComprasController implements Initializable{
     public void limpiarControles () {
         txtNumeroDocumento.clear();
         txtDescripcion.clear();
-        txtFechaDocumento.clear();
         txtTotalDocumento.clear();
         
     }

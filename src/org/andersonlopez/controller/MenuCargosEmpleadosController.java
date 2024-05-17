@@ -57,7 +57,7 @@ public class MenuCargosEmpleadosController implements Initializable{
     }
     
         public void seleccionarElemento(){
-        txtCodigoCargoEmpleado.setText(String.valueOf(((CargoEmpleado)tblCargosEmp.getSelectionModel().getSelectedItem()).getClass()));
+        txtCodigoCargoEmpleado.setText(String.valueOf(((CargoEmpleado) tblCargosEmp.getSelectionModel().getSelectedItem()).getCodigoCargoEmpleado()));
         txtnombreCargo.setText(((CargoEmpleado) tblCargosEmp.getSelectionModel().getSelectedItem()).getNombreCargo());
         txtDescripcion.setText(((CargoEmpleado) tblCargosEmp.getSelectionModel().getSelectedItem()).getDescripcionCargo());
         
@@ -66,7 +66,7 @@ public class MenuCargosEmpleadosController implements Initializable{
     public ObservableList<CargoEmpleado> getCargoEmpleado(){
         ArrayList<CargoEmpleado> lista = new ArrayList<>();
         try{
-            PreparedStatement procediiento = Conexion.getInstancia().getConexion().prepareCall("{call sp_ListarCargoEmpleado()}");
+            PreparedStatement procediiento = Conexion.getInstancia().getConexion().prepareCall("{call sp_listarCargoEmpleados()}");
             ResultSet resultado = procediiento.executeQuery();
             while(resultado.next()){
                 lista.add(new CargoEmpleado (resultado.getInt("codigoCargoEmpleado"),
@@ -113,7 +113,7 @@ public class MenuCargosEmpleadosController implements Initializable{
         registro.setNombreCargo(txtDescripcion.getText());
         registro.setDescripcionCargo(txtDescripcion.getText());
        try{
-            PreparedStatement procedimiento = Conexion.getInstancia().getConexion().prepareCall ("{call sp_AgregarCargoEmpleado(?, ?, ?)}");
+            PreparedStatement procedimiento = Conexion.getInstancia().getConexion().prepareCall ("{call sp_agregarCargoEmpleado(?, ?, ?)}");
             procedimiento.setInt(1, registro.getCodigoCargoEmpleado());
             procedimiento.setString(2, registro.getNombreCargo());
             procedimiento.setString(3, registro.getDescripcionCargo());
@@ -145,7 +145,7 @@ public class MenuCargosEmpleadosController implements Initializable{
                             "Eliminar Clientes", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if(respuesta == JOptionPane.YES_NO_OPTION){
                         try{
-                            PreparedStatement procedimiento = Conexion.getInstancia().getConexion().prepareCall(" {call sp_EliminarCargoEmpleado(?)}");
+                            PreparedStatement procedimiento = Conexion.getInstancia().getConexion().prepareCall(" {call sp_eliminarCargoEmpleado(?)}");
                             procedimiento.setInt(1, ((CargoEmpleado) tblCargosEmp.getSelectionModel().getSelectedItem()).getCodigoCargoEmpleado()); 
                             procedimiento.execute();
                             ListarCargo.remove (tblCargosEmp.getSelectionModel().getSelectedItem());
@@ -193,7 +193,7 @@ public class MenuCargosEmpleadosController implements Initializable{
     
     public void Actualizar(){
         try{
-            PreparedStatement procedimiento = Conexion.getInstancia().getConexion().prepareCall(" {call sp_EditarCargoEmpleado(?, ?, ?)}");
+            PreparedStatement procedimiento = Conexion.getInstancia().getConexion().prepareCall(" {call sp_editarCargoEmpleado(?, ?, ?)}");
             CargoEmpleado registro = (CargoEmpleado) tblCargosEmp.getSelectionModel().getSelectedItem();
             registro.setNombreCargo(txtDescripcion.getText());
             registro.setDescripcionCargo(txtDescripcion.getText());

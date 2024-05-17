@@ -62,7 +62,7 @@ public class MenuTipoProductosController implements Initializable{
     public ObservableList<TipoProducto> getTipoProducto(){
         ArrayList<TipoProducto> lista = new ArrayList<>();
         try{
-            PreparedStatement procediiento = Conexion.getInstancia().getConexion().prepareCall("{call sp_ListarTipoProductos()}");
+            PreparedStatement procediiento = Conexion.getInstancia().getConexion().prepareCall("{call sp_ListarTipoProducto()}");
             ResultSet resultado = procediiento.executeQuery();
             while(resultado.next()){
                 lista.add(new TipoProducto (resultado.getInt("codigoTipoProducto"),

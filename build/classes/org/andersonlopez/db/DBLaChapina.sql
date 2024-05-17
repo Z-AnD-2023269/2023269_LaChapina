@@ -366,7 +366,7 @@ Delimiter $$
     Begin
 		Insert Into EmailProveedor(codigoEmailProveedor,emailProveedor,descripcion,codigoProveedor)
         values (codigoEmailProveedor,emailProveedor,descripcion,codigoProveedor);
-    End $$
+    End ;
 Delimiter ;
 
 Delimiter $$
@@ -402,16 +402,6 @@ Delimiter $$
 Delimiter ;
 
 Delimiter $$
-	create procedure sp_ListarTipoProductos()
-    Begin
-		select
-			TP.codigoTipoProducto,
-            TP.descripcion
-		from TipoProducto TP;
-    End $$
-Delimiter ;
-
-Delimiter $$
 	create procedure sp_AgregarTipoProducto(in codigoTipoProducto int, in descripcion varchar(45))
     Begin
 		Insert Into TipoProducto(codigoTipoProducto,descripcion)
@@ -419,54 +409,62 @@ Delimiter $$
     End $$
 Delimiter ;
 
-call sp_AgregarTipoProducto(2, 'funciona :D');
-
-call sp_ListarTipoProductos();
-
+Delimiter $$
+	create procedure sp_ListarTipoProducto()
+    Begin
+		select
+			TP.codigoTipoProducto,
+            Tp.descripcion
+		from TipoProducto TP;
+    End $$
+Delimiter ;
 
 Delimiter $$
-	create procedure sp_EditarTipoProducto(in _codigoTipoProductos int, in _descripcion varchar(45))
+	create procedure sp_EditarTipoProducto(in _codigoTipoProducto int, in _descripcion varchar(45))
     Begin
 		update TipoProducto TP
         set
 			TP.descripcion = _descripcion
-		where codigoTipoProducto = _codigoTipoProductos;
+		where TP.codigoTipoProducto = _codigoTipoProdcuto;
     End $$
 Delimiter ;
 
 Delimiter $$
 	create procedure sp_EliminarTipoProducto(in _codigoTipoProdcuto int)
-    Begin
-		Delete from TipoProducto 
+    begin
+		Delete From TipoProducto
         where codigoTipoProducto = _codigoTipoProdcuto;
-    End $$
+    end $$
 Delimiter ;
 
-Delimiter $$
-CREATE PROCEDURE sp_AgregarCargoEmpleado(
-	IN p_codigoCargoEmpleado int,
+DELIMITER $$
+
+CREATE PROCEDURE sp_agregarCargoEmpleado(
+    IN p_codigoCargoEmpleado INT,
     IN p_nombreCargo VARCHAR(45),
     IN p_descripcionCargo VARCHAR(45)
 )
 BEGIN
-    INSERT INTO CargoEmpleado (codigoCargoEmpleado, nombreCargo, descripcionCargo)
+    INSERT INTO CargoEmpleado (codigoCargoEmpleado, nombreCargo, descripcionCargo) 
     VALUES (p_codigoCargoEmpleado, p_nombreCargo, p_descripcionCargo);
 END $$
-Delimiter ;
 
-call sp_AgregarCargoEmpleado(1, 'nasheeeeeeeeeeeee', ':D');
+DELIMITER ;
 
-Delimiter $$
-CREATE PROCEDURE sp_ListarCargoEmpleado()
+CALL sp_agregarCargoEmpleado(2, 'Subgerente', 'Asistente del gerente');
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_listarCargoEmpleados()
 BEGIN
     SELECT * FROM CargoEmpleado;
 END $$
-Delimiter ;
 
-call sp_ListarCargoEmpleado();
+DELIMITER ;
 
-Delimiter $$
-CREATE PROCEDURE sp_EditarCargoEmpleado(
+DELIMITER $$
+
+CREATE PROCEDURE sp_editarCargoEmpleado(
     IN p_codigoCargoEmpleado INT,
     IN p_nombreCargo VARCHAR(45),
     IN p_descripcionCargo VARCHAR(45)
@@ -476,63 +474,78 @@ BEGIN
     SET nombreCargo = p_nombreCargo, descripcionCargo = p_descripcionCargo
     WHERE codigoCargoEmpleado = p_codigoCargoEmpleado;
 END $$
-Delimiter ;
 
-Delimiter $$
-CREATE PROCEDURE sp_EliminarCargoEmpleado(
+DELIMITER ;
+
+CALL sp_editarCargoEmpleado(2, 'Subdirector', 'Asistente del director');
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_eliminarCargoEmpleado(
     IN p_codigoCargoEmpleado INT
 )
 BEGIN
-    DELETE FROM CargoEmpleado WHERE codigoCargoEmpleado = p_codigoCargoEmpleado;
+    DELETE FROM CargoEmpleado
+    WHERE codigoCargoEmpleado = p_codigoCargoEmpleado;
 END $$
-Delimiter ;
 
-Delimiter $$
-CREATE PROCEDURE sp_AgregarCompra(
-	IN p_numeroDocumento int,
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_agregarCompra(
+    IN p_numeroDocumento INT,
+    IN p_fechaDocumento DATE,
     IN p_descripcion VARCHAR(60),
     IN p_totalDocumento DECIMAL(10,2)
 )
 BEGIN
-    INSERT INTO Compras(numeroDocumento, fechaDocumento, descripcion, totalDocumento)
-    VALUES (p_numeroDocumento, NOW(), p_descripcion, p_totalDocumento);
-END$$
+    INSERT INTO Compras (numeroDocumento, fechaDocumento, descripcion, totalDocumento) 
+    VALUES (p_numeroDocumento, p_fechaDocumento, p_descripcion, p_totalDocumento);
+END $$
 
-Delimiter ;
+DELIMITER ;
 
-call sp_AgregarCompra(2, 'nasheeeee', 3.00);
+CALL sp_agregarCompra(1, '2024-05-17', 'Compra de material de oficina', 150.00);
 
-Delimiter $$
-CREATE PROCEDURE sp_ListarCompras()
+DELIMITER $$
+
+CREATE PROCEDURE sp_listarCompras()
 BEGIN
     SELECT * FROM Compras;
 END $$
-Delimiter ;
 
-call sp_ListarCompras();
+DELIMITER ;
 
-Delimiter $$
-CREATE PROCEDURE sp_EditarCompra(
+DELIMITER $$
+
+CREATE PROCEDURE sp_editarCompra(
     IN p_numeroDocumento INT,
-    IN p_descripcion VARCHAR(255),
-    IN p_total DECIMAL(10,2)
+    IN p_fechaDocumento DATE,
+    IN p_descripcion VARCHAR(60),
+    IN p_totalDocumento DECIMAL(10,2)
 )
 BEGIN
     UPDATE Compras
-    SET fechaDocumento = NOW(),
-        descripcion = p_descripcion,
-        totalDocumento = p_total
+    SET fechaDocumento = p_fechaDocumento, descripcion = p_descripcion, totalDocumento = p_totalDocumento
     WHERE numeroDocumento = p_numeroDocumento;
-END$$
-Delimiter ;
+END $$
 
-Delimiter $$
-CREATE PROCEDURE sp_EliminarCompra(
+DELIMITER ;
+
+CALL sp_editarCompra(1, '2024-05-17', 'Compra de material de oficina y papelería', 175.00);
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_eliminarCompra(
     IN p_numeroDocumento INT
 )
 BEGIN
-    DELETE FROM Compras WHERE numeroDocumento = p_numeroDocumento;
+    DELETE FROM Compras
+    WHERE numeroDocumento = p_numeroDocumento;
 END $$
-Delimiter ;
+
+DELIMITER ;
 
 set global time_zone = '-6:00';
+

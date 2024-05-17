@@ -2,8 +2,6 @@
 
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -14,30 +12,15 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="1187.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.andersonlopez.controller.MenuComprasController">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="786.0" prefWidth="1266.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.andersonlopez.controller.MenuProductosController">
    <children>
-      <ImageView fitHeight="794.0" fitWidth="1188.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="786.0" fitWidth="1266.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/Compras.png" />
-         </image></ImageView>
-      <Button fx:id="btnRegresar" layoutX="8.0" layoutY="11.0" mnemonicParsing="false" onAction="#clicRegresar" prefHeight="62.0" prefWidth="138.0">
-         <graphic>
-            <ImageView fitHeight="66.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/Regresar.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <TableView fx:id="tblCompras" layoutX="306.0" layoutY="259.0" onMouseClicked="#seleccionarElemento" prefHeight="395.0" prefWidth="870.0">
-         <columns>
-            <TableColumn fx:id="colNumeroDocumento" prefWidth="217.5" text="numeroDocumento" />
-            <TableColumn fx:id="colFechaDocumento" prefWidth="217.5" text="fechaDocumento" />
-            <TableColumn fx:id="colDes" minWidth="0.0" prefWidth="217.5" text="descripcion" />
-            <TableColumn fx:id="colTotalDocumento" prefWidth="217.5" text="totalDocumento" />
-         </columns>
-      </TableView>
-      <GridPane layoutX="53.0" layoutY="245.0" prefHeight="417.0" prefWidth="236.0">
+            <Image url="@../images/Productos.png" />
+         </image>
+      </ImageView>
+      <GridPane layoutX="46.0" layoutY="324.0" prefHeight="417.0" prefWidth="236.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
          </columnConstraints>
@@ -62,10 +45,6 @@
                </styleClass>
             </Button>
             <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#Eliminar" onMouseClicked="#seleccionarElemento" prefHeight="119.0" prefWidth="267.0" stylesheets="@../resource/LaChapinaCSS.css" text="Eliminar" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" GridPane.rowIndex="1">
-               <styleClass>
-                  <String fx:value="button3" />
-                  <String fx:value="button2" />
-               </styleClass>
                <graphic>
                   <ImageView fx:id="imgEliminar" fitHeight="63.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -73,6 +52,10 @@
                      </image>
                   </ImageView>
                </graphic>
+               <styleClass>
+                  <String fx:value="button3" />
+                  <String fx:value="button2" />
+               </styleClass>
             </Button>
             <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#Editar" prefHeight="115.0" prefWidth="267.0" stylesheets="@../resource/LaChapinaCSS.css" text="Editar" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" GridPane.rowIndex="2">
                <graphic>
@@ -102,26 +85,32 @@
             </Button>
          </children>
       </GridPane>
-      <GridPane layoutX="290.0" layoutY="54.0" prefHeight="124.0" prefWidth="524.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="178.0" minWidth="10.0" prefWidth="105.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="10.0" prefWidth="350.0" />
-         </columnConstraints>
-         <rowConstraints>
+      <TableView layoutX="294.0" layoutY="327.0" prefHeight="417.0" prefWidth="956.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="C1" />
+          <TableColumn prefWidth="75.0" text="C2" />
+        </columns>
+      </TableView>
+      <ImageView fitHeight="178.0" fitWidth="204.0" layoutX="1002.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Logo.png" />
+         </image>
+      </ImageView>
+      <GridPane layoutX="325.0" layoutY="55.0" prefHeight="241.0" prefWidth="610.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         </rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <Label prefHeight="17.0" prefWidth="140.0" text="numeroDocumento" />
-            <TextField fx:id="txtNumeroDocumento" GridPane.columnIndex="1" />
-            <Label text="descripcion" GridPane.rowIndex="2" />
-            <TextField fx:id="txtDescripcion" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label prefHeight="17.0" prefWidth="115.0" text="totalDocumento" GridPane.rowIndex="3" />
-            <TextField fx:id="txtTotalDocumento" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label text="fechaDocumentacion" GridPane.rowIndex="1" />
-            <DatePicker fx:id="dpFechaDocumento" prefHeight="25.0" prefWidth="350.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField GridPane.columnIndex="1" />
          </children>
       </GridPane>
    </children>
