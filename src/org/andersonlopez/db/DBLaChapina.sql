@@ -25,7 +25,28 @@ create table Proveedores(
     paginaWeb varchar(50),
     primary key PK_codigoProveedor (codigoProveedor)
 );
+
+create table Compras(
+	numeroDocumento int not null,
+    fechaDocumento date,
+    descripcion varchar(60),
+    totalDocumento decimal(10,2),
+    primary key PK_numeroDocumento(numeroDocumento)
+);
  
+ create table TipoProducto(
+	codigoTipoProducto int not null,
+    descripcion varchar(45),
+    primary key PK_codigoTipoProducto (codigoTipoProducto)
+);
+ 
+ create table CargoEmpleado(
+	codigoCargoEmpleado int not null,
+    nombreCargo varchar(45),
+    descripcionCargo varchar(45),
+    primary key PK_codigoCargoEmpleado(codigoCargoEmpleado)
+);
+
 create table TelefonoProveedor(
 	codigoTelefonoProveedor int not null,
     numeroPrincipal varchar(8),
@@ -47,12 +68,6 @@ create table EmailProveedor(
 		references Proveedores(codigoProveedor)
 );
 
-create table TipoProducto(
-	codigoTipoProducto int not null,
-    descripcion varchar(45),
-    primary key PK_codigoTipoProducto (codigoTipoProducto)
-);
- 
 create table Productos(
 	codigoProducto varchar(15) not null,
     descripcionProducto varchar(45),
@@ -70,14 +85,6 @@ create table Productos(
 		references Proveedores(codigoProveedor)
 );
 
-create table Compras(
-	numeroDocumento int not null,
-    fechaDocumento date,
-    descripcion varchar(60),
-    totalDocumento decimal(10,2),
-    primary key PK_numeroDocumento(numeroDocumento)
-);
-
 create table DetalleCompra(
 	codigoDetalleCompra int not null,
     costoUnitario decimal(10,2),
@@ -89,13 +96,6 @@ create table DetalleCompra(
 		references Productos(codigoProducto),
 	constraint FK_numeroDocumento_DetalleCompra foreign key (numeroDocumento)
 		references Compras(numeroDocumento)
-);
-
-create table CargoEmpleado(
-	codigoCargoEmpleado int not null,
-    nombreCargo varchar(45),
-    descripcionCargo varchar(45),
-    primary key PK_codigoCargoEmpleado(codigoCargoEmpleado)
 );
 
 create table Empleados(
@@ -344,109 +344,6 @@ delimiter ;
 
 call sp_editarProveedor(1, '1234567890123', 'Juan', 'Perez', 'Calle 123', 'Razón Social', 'Contacto', 'www.proveedor.com');
 
-
--- -----------------------TelefonoProveedor Procedimiento Almacenados ------------------------
--- CRUD PROVEEDORES
--- ---------------------------Agregar Telefono Proveedor-----------------------------
-
-Delimiter $$
-	create procedure sp_AgregarTelefonoProveedor(in codigoTelefonoProveedor int,in numeroPrincipal varchar(8), in numeroSecundario varchar(8), in observaciones varchar(45), in codigoProveedor int)
-    Begin
-		Insert Into TelefonoProveedor(codigoTeleonoProveedor,numeroPrincipal,numeroSecundario,observaciones,codigoProveedor)
-        values (codigoTeleonoProveedor,numeroPrincipal,numeroSecundario,observaciones,codigoProveedor);
-    End $$
-Delimiter ;
-
--- ---------------------------Listar Telefono Proveedor-----------------------------
-
-Delimiter $$
-	create procedure sp_ListarTelefonoProveedor()
-    Begin
-		Select
-			TP.codigoTelefonoProveedor,
-            TP.numeroPrincipal,
-            TP.numeroSecundario,
-            TP.observaciones,
-            TP.codigoProveedor
-		from TelefonoProveedor TP;
-    End $$
-Delimiter ;
-
--- ---------------------------Editar Telefono Proveedor-----------------------------
-
-Delimiter $$
-	create procedure sp_EditarTelefonoProveedor(in _codigoTelefonoProveedor int,in _numeroPrincipal varchar(8), in _numeroSecundario varchar(8), in _observaciones varchar(45), in _codigoProveedor int)
-    Begin
-		update TelefonoProveedor TP 
-			set 
-			 TP.numeroPrincipal = _numeroPrincipal,
-             TP.numeroSecundario = _numeroSecundario,
-			 TP.observaciones = _observaciones,
-             TP.codigoProveedor = _codigoProveedor
-		    where TP.codigoTelefonoProveedor = _codigoTelefonoProveedor;
-    End $$
-Delimiter ;
-
--- ---------------------------Eliminar Telefono Proveedor-----------------------------
-
-Delimiter $$
-	create procedure sp_EliminarTelefonoProveedor(in _codigoTelefonoProveedor int)
-    Begin
-		Delete From TelefonoProveedor
-        where codigoTelefonoProveedor = _codigoTelefonoProveedor;
-    End $$
-Delimiter ;
-
--- -----------------------EmailProveedor Procedimiento Almacenados ------------------------
--- CRUD PROVEEDORES
--- ---------------------------Agregar Email Proveedor-----------------------------
-
-Delimiter $$
-	create procedure sp_AgregarEmailProveedor(in codigoEmailProveedor int, in emailProveedor varchar(50), in descripcion varchar(100), in codigoProveedor int)	
-    Begin
-		Insert Into EmailProveedor(codigoEmailProveedor,emailProveedor,descripcion,codigoProveedor)
-        values (codigoEmailProveedor,emailProveedor,descripcion,codigoProveedor);
-    End ;
-Delimiter ;
-
--- ---------------------------Listar Email Proveedor-----------------------------
-
-Delimiter $$
-	create procedure sp_ListarEmailProveedor()
-    Begin
-		Select
-			EP.codigoEmailProveedor,
-            EP.emailProveedor,
-            EP.descripcion,
-            EP.codigoProveedor
-		from EmailProveedor EP;
-    End $$
-Delimiter ;
-
--- ---------------------------Editar Email Proveedor-----------------------------
-
-Delimiter $$
-	create procedure sp_EditarEmailProveedor(in _codigoEmailProveedor int, in _emailProveedor varchar(50), in _descripcion varchar(100), in _codigoProveedor int)
-    Begin
-		update EmailProveedor EP
-		set
-			EP.emailProveedor = _emailProveedor,
-            EP.descripcion = _descripcion,
-            EP.codigoProveedor = _codigoProveedor
-		where EP.codigoEmailProveedor = _codigoEmailProveedor;
-    End $$
-Delimiter ;
-
--- ---------------------------Eliminar Email Proveedor-----------------------------
-
-Delimiter $$
-	create procedure sp_EliminarEmailProveedor(in _codigoEmailProveedor int)
-    Begin
-		Delete from EmailProveedor 
-        where codigoEmailProveedor = _codigoEmailProveedor;
-    End $$
-Delimiter ;
-
 -- -----------------------Tipo de Producto  Procedimiento Almacenados ------------------------
 -- CRUD TIPO PRODUCTO
 -- ---------------------------Agregar TipoDeProducto-----------------------------
@@ -532,7 +429,7 @@ END $$
 
 DELIMITER ;
 
-CALL sp_agregarCargoEmpleado(2, 'Subgerente', 'Asistente del gerente');
+CALL sp_agregarCargoEmpleado(1, 'Subgerente', 'Asistente del gerente');
 
 DELIMITER $$
 
@@ -716,7 +613,384 @@ END $$
 
 DELIMITER ;
 
-call sp_eliminarProducto('P001');
+-- call sp_eliminarProducto('P001');
+
+-- -----------------------TelefonoProveedor Procedimiento Almacenados ------------------------
+-- CRUD PROVEEDORES
+-- ---------------------------Agregar Telefono Proveedor-----------------------------
+
+Delimiter $$
+	create procedure sp_AgregarTelefonoProveedor(in codigoTelefonoProveedor int,in numeroPrincipal varchar(8), in numeroSecundario varchar(8), in observaciones varchar(45), in codigoProveedor int)
+    Begin
+		Insert Into TelefonoProveedor(codigoTeleonoProveedor,numeroPrincipal,numeroSecundario,observaciones,codigoProveedor)
+        values (codigoTeleonoProveedor,numeroPrincipal,numeroSecundario,observaciones,codigoProveedor);
+    End $$
+Delimiter ;
+
+-- ---------------------------Listar Telefono Proveedor-----------------------------
+
+Delimiter $$
+	create procedure sp_ListarTelefonoProveedor()
+    Begin
+		Select
+			TP.codigoTelefonoProveedor,
+            TP.numeroPrincipal,
+            TP.numeroSecundario,
+            TP.observaciones,
+            TP.codigoProveedor
+		from TelefonoProveedor TP;
+    End $$
+Delimiter ;
+
+-- ---------------------------Editar Telefono Proveedor-----------------------------
+
+Delimiter $$
+	create procedure sp_EditarTelefonoProveedor(in _codigoTelefonoProveedor int,in _numeroPrincipal varchar(8), in _numeroSecundario varchar(8), in _observaciones varchar(45), in _codigoProveedor int)
+    Begin
+		update TelefonoProveedor TP 
+			set 
+			 TP.numeroPrincipal = _numeroPrincipal,
+             TP.numeroSecundario = _numeroSecundario,
+			 TP.observaciones = _observaciones,
+             TP.codigoProveedor = _codigoProveedor
+		    where TP.codigoTelefonoProveedor = _codigoTelefonoProveedor;
+    End $$
+Delimiter ;
+
+-- ---------------------------Eliminar Telefono Proveedor-----------------------------
+
+Delimiter $$
+	create procedure sp_EliminarTelefonoProveedor(in _codigoTelefonoProveedor int)
+    Begin
+		Delete From TelefonoProveedor
+        where codigoTelefonoProveedor = _codigoTelefonoProveedor;
+    End $$
+Delimiter ;
+
+-- -----------------------EmailProveedor Procedimiento Almacenados ------------------------
+-- CRUD PROVEEDORES
+-- ---------------------------Agregar Email Proveedor-----------------------------
+
+Delimiter $$
+	create procedure sp_AgregarEmailProveedor(in codigoEmailProveedor int, in emailProveedor varchar(50), in descripcion varchar(100), in codigoProveedor int)	
+    Begin
+		Insert Into EmailProveedor(codigoEmailProveedor,emailProveedor,descripcion,codigoProveedor)
+        values (codigoEmailProveedor,emailProveedor,descripcion,codigoProveedor);
+    End ;
+Delimiter ;
+
+-- ---------------------------Listar Email Proveedor-----------------------------
+
+Delimiter $$
+	create procedure sp_ListarEmailProveedor()
+    Begin
+		Select
+			EP.codigoEmailProveedor,
+            EP.emailProveedor,
+            EP.descripcion,
+            EP.codigoProveedor
+		from EmailProveedor EP;
+    End $$
+Delimiter ;
+
+-- ---------------------------Editar Email Proveedor-----------------------------
+
+Delimiter $$
+	create procedure sp_EditarEmailProveedor(in _codigoEmailProveedor int, in _emailProveedor varchar(50), in _descripcion varchar(100), in _codigoProveedor int)
+    Begin
+		update EmailProveedor EP
+		set
+			EP.emailProveedor = _emailProveedor,
+            EP.descripcion = _descripcion,
+            EP.codigoProveedor = _codigoProveedor
+		where EP.codigoEmailProveedor = _codigoEmailProveedor;
+    End $$
+Delimiter ;
+
+-- ---------------------------Eliminar Email Proveedor-----------------------------
+
+Delimiter $$
+	create procedure sp_EliminarEmailProveedor(in _codigoEmailProveedor int)
+    Begin
+		Delete from EmailProveedor 
+        where codigoEmailProveedor = _codigoEmailProveedor;
+    End $$
+Delimiter ;
+
+-- -----------------------DetalleCompra Procedimientos Almacenados ------------------------
+-- CRUD DetalleCompra
+-- ---------------------------Agregar DetalleCompra-----------------------------
+DELIMITER $$
+CREATE PROCEDURE sp_AgregarDetalleCompra(
+	IN p_codigoDetalleCompra int,
+	IN p_costoUnitario DECIMAL(10,2),
+    IN p_cantidad INT,
+    IN p_codigoProducto VARCHAR(15),
+    IN p_numeroDocumento INT
+)
+BEGIN
+	INSERT INTO DetalleCompra (codigoDetalleCompra, costoUnitario, cantidad, codigoProducto, numeroDocumento)
+	VALUES (p_codigoDetalleCompra, p_costoUnitario, p_cantidad, p_codigoProducto, p_numeroDocumento);
+END $$
+DELIMITER ;
+
+CALL sp_AgregarDetalleCompra(1, 10.50, 5, 'P001', 1); 
+
+-- ---------------------------Listar DetalleCompra-----------------------------
+DELIMITER $$
+CREATE PROCEDURE sp_ListarDetalleCompra()
+BEGIN
+	SELECT * FROM DetalleCompra;
+END $$
+DELIMITER ;
+
+-- ---------------------------Buscar DetalleCompra-----------------------------
+DELIMITER $$
+CREATE PROCEDURE sp_BuscarDetalleCompra(
+	IN p_codigoDetalleCompra INT
+)
+BEGIN
+	SELECT * FROM DetalleCompra WHERE codigoDetalleCompra = p_codigoDetalleCompra;
+END $$
+DELIMITER ;
+
+-- ---------------------------Editar DetalleCompra-----------------------------
+DELIMITER $$
+CREATE PROCEDURE sp_EditarDetalleCompra(
+	IN p_codigoDetalleCompra INT,
+    IN p_costoUnitario DECIMAL(10,2),
+    IN p_cantidad INT,
+    IN p_codigoProducto VARCHAR(15),
+    IN p_numeroDocumento INT
+)
+BEGIN
+	UPDATE DetalleCompra
+	SET costoUnitario = p_costoUnitario,
+		cantidad = p_cantidad,
+		codigoProducto = p_codigoProducto,
+		numeroDocumento = p_numeroDocumento
+	WHERE codigoDetalleCompra = p_codigoDetalleCompra;
+END $$
+DELIMITER ;
+
+-- ---------------------------Eliminar DetalleCompra-----------------------------
+DELIMITER $$
+CREATE PROCEDURE sp_EliminarDetalleCompra(
+	IN p_codigoDetalleCompra INT
+)
+BEGIN
+	DELETE FROM DetalleCompra WHERE codigoDetalleCompra = p_codigoDetalleCompra;
+END $$
+DELIMITER ;
+
+
+-- -----------------------Empleados Procedimientos Almacenados ------------------------
+-- CRUD Empleados
+-- ---------------------------Agregar Empleados-----------------------------
+DELIMITER $$
+CREATE PROCEDURE sp_AgregarEmpleado(
+	IN p_codigoEmpleado int,
+	IN p_nombresEmpleado VARCHAR(50),
+    IN p_apellidosEmpleado VARCHAR(50),
+    IN p_sueldo DECIMAL(10,2),
+    IN p_direccion VARCHAR(150),
+    IN p_turno VARCHAR(15),
+    IN p_codigoCargoEmpleado INT
+)
+BEGIN
+	INSERT INTO Empleados (codigoEmpleado, nombresEmpleado, apellidosEmpleado, sueldo, direccion, turno, codigoCargoEmpleado)
+	VALUES (p_codigoEmpleado, p_nombresEmpleado, p_apellidosEmpleado, p_sueldo, p_direccion, p_turno, p_codigoCargoEmpleado);
+END $$
+DELIMITER ;
+
+CALL sp_AgregarEmpleado(1, 'Juan', 'Perez', 1500.00, 'Calle 123', 'Mañana', 1);
+
+-- ---------------------------Listar Empleados-----------------------------
+DELIMITER $$
+CREATE PROCEDURE sp_ListarEmpleados()
+BEGIN
+	SELECT * FROM Empleados;
+END $$
+DELIMITER ;
+
+-- ---------------------------Buscar Empleados-----------------------------
+DELIMITER $$
+CREATE PROCEDURE sp_BuscarEmpleado(
+	IN p_codigoEmpleado INT
+)
+BEGIN
+	SELECT * FROM Empleados WHERE codigoEmpleado = p_codigoEmpleado;
+END $$
+DELIMITER ;
+
+-- ---------------------------Editar Empleados-----------------------------
+DELIMITER $$
+CREATE PROCEDURE sp_EditarEmpleado(
+	IN p_codigoEmpleado INT,
+    IN p_nombresEmpleado VARCHAR(50),
+    IN p_apellidosEmpleado VARCHAR(50),
+    IN p_sueldo DECIMAL(10,2),
+    IN p_direccion VARCHAR(150),
+    IN p_turno VARCHAR(15),
+    IN p_codigoCargoEmpleado INT
+)
+BEGIN
+	UPDATE Empleados
+	SET nombresEmpleado = p_nombresEmpleado,
+		apellidosEmpleado = p_apellidosEmpleado,
+		sueldo = p_sueldo,
+		direccion = p_direccion,
+		turno = p_turno,
+		codigoCargoEmpleado = p_codigoCargoEmpleado
+	WHERE codigoEmpleado = p_codigoEmpleado;
+END $$
+DELIMITER ;
+
+-- ---------------------------Eliminar Empleados-----------------------------
+DELIMITER $$
+CREATE PROCEDURE sp_EliminarEmpleado(
+	IN p_codigoEmpleado INT
+)
+BEGIN
+	DELETE FROM Empleados WHERE codigoEmpleado = p_codigoEmpleado;
+END $$
+DELIMITER ;
+
+
+-- -----------------------Factura Procedimientos Almacenados ------------------------
+-- CRUD Factura
+-- ---------------------------Agregar Factura-----------------------------
+DELIMITER $$
+CREATE PROCEDURE sp_AgregarFactura(
+	IN p_numeroFactura INT,
+    IN p_estado VARCHAR(50),
+    IN p_totalFactura DECIMAL(10,2),
+    IN p_fechaFactura VARCHAR(45),
+    IN p_codigoCliente INT,
+    IN p_codigoEmpleado INT
+)
+BEGIN
+	INSERT INTO Factura (numeroFactura, estado, totalFactura, fechaFactura, codigoCliente, codigoEmpleado)
+	VALUES (p_numeroFactura, p_estado, p_totalFactura, p_fechaFactura, p_codigoCliente, p_codigoEmpleado);
+END $$
+DELIMITER ;
+
+CALL sp_AgregarFactura(1, 'Pendiente', 100.00, '2024-05-20', 1, 1);
+
+-- ---------------------------Listar Factura-----------------------------
+DELIMITER $$
+CREATE PROCEDURE sp_ListarFacturas()
+BEGIN
+	SELECT * FROM Factura;
+END $$
+DELIMITER ;
+
+-- ---------------------------Buscar Factura-----------------------------
+DELIMITER $$
+CREATE PROCEDURE sp_BuscarFactura(
+	IN p_numeroFactura INT
+)
+BEGIN
+	SELECT * FROM Factura WHERE numeroFactura = p_numeroFactura;
+END $$
+DELIMITER ;
+
+-- ---------------------------Editar Factura-----------------------------
+DELIMITER $$
+CREATE PROCEDURE sp_EditarFactura(
+	IN p_numeroFactura INT,
+    IN p_estado VARCHAR(50),
+    IN p_totalFactura DECIMAL(10,2),
+    IN p_fechaFactura VARCHAR(45),
+    IN p_codigoCliente INT,
+    IN p_codigoEmpleado INT
+)
+BEGIN
+	UPDATE Factura
+	SET estado = p_estado,
+		totalFactura = p_totalFactura,
+		fechaFactura = p_fechaFactura,
+		codigoCliente = p_codigoCliente,
+		codigoEmpleado = p_codigoEmpleado
+	WHERE numeroFactura = p_numeroFactura;
+END $$
+DELIMITER ;
+
+-- ---------------------------Eliminar Factura-----------------------------
+DELIMITER $$
+CREATE PROCEDURE sp_EliminarFactura(
+	IN p_numeroFactura INT
+)
+BEGIN
+	DELETE FROM Factura WHERE numeroFactura = p_numeroFactura;
+END $$
+DELIMITER ;
+
+
+-- -----------------------DetalleFactura Procedimientos Almacenados ------------------------
+-- CRUD DetalleFactura
+-- ---------------------------Agregar DetalleFactura-----------------------------
+DELIMITER $$
+CREATE PROCEDURE sp_AgregarDetalleFactura(
+	IN p_codigoDetalleFactura int,
+	IN p_precioUnitario DECIMAL(10,2),
+    IN p_cantidad INT,
+    IN p_numeroFactura INT,
+    IN p_codigoProducto VARCHAR(15)
+)
+BEGIN
+	INSERT INTO DetalleFactura (codigoDetalleFactura, precioUnitario, cantidad, numeroFactura, codigoProducto)
+	VALUES (p_codigoDetalleFactura, p_precioUnitario, p_cantidad, p_numeroFactura, p_codigoProducto);
+END $$
+DELIMITER ;
+
+CALL sp_AgregarDetalleFactura(1, 5.00, 2, 1, 'P001');
+
+-- ---------------------------Listar DetalleFactura-----------------------------
+DELIMITER $$
+CREATE PROCEDURE sp_ListarDetalleFactura()
+BEGIN
+	SELECT * FROM DetalleFactura;
+END $$
+
+-- ---------------------------Buscar DetalleFactura-----------------------------
+DELIMITER $$
+CREATE PROCEDURE sp_BuscarDetalleFactura(
+	IN p_codigoDetalleFactura INT
+)
+BEGIN
+	SELECT * FROM DetalleFactura WHERE codigoDetalleFactura = p_codigoDetalleFactura;
+END $$
+DELIMITER ;
+
+-- ---------------------------Editar DetalleFactura-----------------------------
+DELIMITER $$
+CREATE PROCEDURE sp_EditarDetalleFactura(
+	IN p_codigoDetalleFactura INT,
+    IN p_precioUnitario DECIMAL(10,2),
+    IN p_cantidad INT,
+    IN p_numeroFactura INT,
+    IN p_codigoProducto VARCHAR(15)
+)
+BEGIN
+	UPDATE DetalleFactura
+	SET precioUnitario = p_precioUnitario,
+		cantidad = p_cantidad,
+		numeroFactura = p_numeroFactura,
+		codigoProducto = p_codigoProducto
+	WHERE codigoDetalleFactura = p_codigoDetalleFactura;
+END $$
+DELIMITER ;
+
+-- ---------------------------Eliminar DetalleFactura-----------------------------
+DELIMITER $$
+CREATE PROCEDURE sp_EliminarDetalleFactura(
+	IN p_codigoDetalleFactura INT
+)
+BEGIN
+	DELETE FROM DetalleFactura WHERE codigoDetalleFactura = p_codigoDetalleFactura;
+END $$
+DELIMITER ;
+
 
 set global time_zone = '-6:00';
-
