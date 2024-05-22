@@ -9,7 +9,7 @@ create table Clientes(
 	nombreCliente varchar(60) not null,
     apellidoCliente varchar(60) not null,
     direccionCliente varchar(150),
-    telefonoCliente varchar(10),
+    telefonoCliente varchar(20),
     correoCliente varchar(45),
     primary key PK_codigoCliente(codigoCliente)
 );    
@@ -211,7 +211,7 @@ DELIMITER ;
 
 DELIMITER $$ 
 CREATE PROCEDURE sp_EditarCliente	(in codigoClientes int,in NITclientes varchar(10) ,in nombreClientes varchar(60) ,in apellidoClientes varchar(60) ,
-	in direccionClientes varchar(150),in telefonoClientes varchar(10),in correoClientes varchar(45))
+	in direccionClientes varchar(150),in telefonoClientes varchar(20),in correoClientes varchar(45))
 	BEGIN
 		UPDATE Clientes C
 			SET
@@ -396,13 +396,13 @@ call sp_buscarTipoProducto(2);
 -- ----------------------------Editar TipoDeProducto------------------------------------
 
 Delimiter $$
-	create procedure sp_EditarTipoProducto(in _codigoTipoProducto int, in _descripcion varchar(45))
-    Begin
+create procedure sp_EditarTipoProducto(in _codigoTipoProducto int, in _descripcion varchar(45))
+	Begin
 		update TipoProducto TP
-        set
+		set
 			TP.descripcion = _descripcion
-		where TP.codigoTipoProducto = _codigoTipoProdcuto;
-    End $$
+		where TP.codigoTipoProducto = _codigoTipoProducto;
+	End $$
 Delimiter ;
 
 -- -----------------------Eliminar TipodeProducto------------------------------
@@ -556,7 +556,7 @@ CALL sp_agregarProducto('P005', 'Azúcar', 4.49, 51.99, 98.99, 90, 4, 5);
 -- -----------------------Listar Productos--------------------------------
 
 Delimiter $$
-create procedure sp_mostrarProductos()
+create procedure sp_ListarProductos()
 	begin
     select
 		p.codigoProducto,
@@ -572,7 +572,7 @@ create procedure sp_mostrarProductos()
 	end$$
 Delimiter ;
 
-call sp_mostrarProductos();
+call sp_ListarProductos();
 
 -- ----------------------------Editar Producto------------------------------------
 

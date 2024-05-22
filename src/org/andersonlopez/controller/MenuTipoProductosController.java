@@ -22,52 +22,69 @@ import org.andersonlopez.bean.TipoProducto;
 import org.andersonlopez.db.Conexion;
 import org.andersonlopez.system.Main;
 
-public class MenuTipoProductosController implements Initializable{
+public class MenuTipoProductosController implements Initializable {
+
     private Main escenarioPrincipal;
-        private enum operaciones {AGREGAR, ELIMINAR, ACTUALIZAR, CANCELAR, NINGUNO}
-        private operaciones tipoDeOperaciones = operaciones.NINGUNO;
-        private ObservableList<TipoProducto> ListarTipo;
-    @FXML private Button btnRegresar;
-    @FXML private TextField txtCodigoTipoProducto;
-    @FXML private TextField txtDescripcion;
-    @FXML private TableView tblTipoProducto;
-    @FXML private TableColumn colCodigoTP;
-    @FXML private TableColumn colDes;
-    @FXML private Button btnAgregar;
-    @FXML private Button btnEliminar;
-    @FXML private Button btnEditar;
-    @FXML private Button btnReporte;
-    @FXML private ImageView imgAgregar;
-    @FXML private ImageView imgEliminar;
-    @FXML private ImageView imgEditar;
-    @FXML private ImageView imgReporte;
-    
+
+    private enum operaciones {
+        AGREGAR, ELIMINAR, ACTUALIZAR, CANCELAR, NINGUNO
+    }
+    private operaciones tipoDeOperaciones = operaciones.NINGUNO;
+    private ObservableList<TipoProducto> ListarTipo;
+    @FXML
+    private Button btnRegresar;
+    @FXML
+    private TextField txtCodigoTipoProducto;
+    @FXML
+    private TextField txtDescripcion;
+    @FXML
+    private TableView tblTipoProducto;
+    @FXML
+    private TableColumn colCodigoTP;
+    @FXML
+    private TableColumn colDes;
+    @FXML
+    private Button btnAgregar;
+    @FXML
+    private Button btnEliminar;
+    @FXML
+    private Button btnEditar;
+    @FXML
+    private Button btnReporte;
+    @FXML
+    private ImageView imgAgregar;
+    @FXML
+    private ImageView imgEliminar;
+    @FXML
+    private ImageView imgEditar;
+    @FXML
+    private ImageView imgReporte;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         CargarDatos();
     }
-    
-    public void CargarDatos(){
+
+    public void CargarDatos() {
         tblTipoProducto.setItems(getTipoProducto());
-        colCodigoTP.setCellValueFactory (new PropertyValueFactory<TipoProducto, Integer>("codigoTipoProducto"));
-        colDes.setCellValueFactory (new PropertyValueFactory<TipoProducto, String>("descripcion"));
+        colCodigoTP.setCellValueFactory(new PropertyValueFactory<TipoProducto, Integer>("codigoTipoProducto"));
+        colDes.setCellValueFactory(new PropertyValueFactory<TipoProducto, String>("descripcion"));
     }
-    
-        public void seleccionarElemento(){
-        txtCodigoTipoProducto.setText(String.valueOf(((TipoProducto)tblTipoProducto.getSelectionModel().getSelectedItem()).getClass()));
+
+    public void seleccionarElemento() {
+        txtCodigoTipoProducto.setText(String.valueOf(((TipoProducto) tblTipoProducto.getSelectionModel().getSelectedItem()).getCodigoTipoProducto()));
         txtDescripcion.setText(((TipoProducto) tblTipoProducto.getSelectionModel().getSelectedItem()).getDescripcion());
-        
+
     }
-    
-    public ObservableList<TipoProducto> getTipoProducto(){
+
+    public ObservableList<TipoProducto> getTipoProducto() {
         ArrayList<TipoProducto> lista = new ArrayList<>();
-        try{
+        try {
             PreparedStatement procediiento = Conexion.getInstancia().getConexion().prepareCall("{call sp_ListarTipoProducto()}");
             ResultSet resultado = procediiento.executeQuery();
-            while(resultado.next()){
-                lista.add(new TipoProducto (resultado.getInt("codigoTipoProducto"),
-                                                        resultado.getString("descripcion")
-
+            while (resultado.next()) {
+                lista.add(new TipoProducto(resultado.getInt("codigoTipoProducto"),
+                        resultado.getString("descripcion")
                 ));
             }
         } catch (Exception e) {
@@ -75,9 +92,9 @@ public class MenuTipoProductosController implements Initializable{
         }
         return ListarTipo = FXCollections.observableArrayList(lista);
     }
-    
-    public void agregar(){
-        switch(tipoDeOperaciones){
+
+    public void agregar() {
+        switch (tipoDeOperaciones) {
             case NINGUNO:
                 activarControles();
                 btnAgregar.setText("Guardar");
@@ -86,7 +103,7 @@ public class MenuTipoProductosController implements Initializable{
                 btnReporte.setDisable(true);
                 imgAgregar.setImage(new Image("org/andersonlopez/images/Guardar.png"));
                 imgEliminar.setImage(new Image("org/andersonlopez/images/Cancelar.png"));
-                tipoDeOperaciones= MenuTipoProductosController.operaciones.ACTUALIZAR;
+                tipoDeOperaciones = MenuTipoProductosController.operaciones.ACTUALIZAR;
                 break;
             case ACTUALIZAR:
                 guardar();
@@ -94,70 +111,72 @@ public class MenuTipoProductosController implements Initializable{
                 limpiarControles();
                 btnAgregar.setText("Agregar");
                 btnEliminar.setText("Eliminar");
-                btnEditar.setDisable (false);
-                btnReporte.setDisable (false);
-                imgAgregar.setImage (new Image("/org/andersonlopez/images/add user.png")); 
+                btnEditar.setDisable(false);
+                btnReporte.setDisable(false);
+                imgAgregar.setImage(new Image("/org/andersonlopez/images/add user.png"));
                 imgEliminar.setImage(new Image("/org/andersonlopez/images/delete user.png"));
-                tipoDeOperaciones= MenuTipoProductosController.operaciones.NINGUNO;
+                tipoDeOperaciones = MenuTipoProductosController.operaciones.NINGUNO;
         }
     }
-    
-    public void guardar (){
+
+    public void guardar() {
         TipoProducto registro = new TipoProducto();
-        registro.setCodigoTipoProducto (Integer.parseInt(txtCodigoTipoProducto.getText()));
+        registro.setCodigoTipoProducto(Integer.parseInt(txtCodigoTipoProducto.getText()));
         registro.setDescripcion(txtDescripcion.getText());
-       try{
-            PreparedStatement procedimiento = Conexion.getInstancia().getConexion().prepareCall ("{call sp_AgregarTipoProducto(?, ?)}");
+        try {
+            PreparedStatement procedimiento = Conexion.getInstancia().getConexion().prepareCall("{call sp_AgregarTipoProducto(?, ?)}");
             procedimiento.setInt(1, registro.getCodigoTipoProducto());
             procedimiento.setString(2, registro.getDescripcion());
             procedimiento.execute();
             ListarTipo.add(registro);
-            
-        } catch (Exception e){
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
     }
-    
-    public void Eliminar(){
-        switch(tipoDeOperaciones){
+
+    public void Eliminar() {
+        switch (tipoDeOperaciones) {
             case ACTUALIZAR:
                 desactivarControles();
                 limpiarControles();
                 btnAgregar.setText("Agregar");
                 btnEliminar.setText("Eliminar");
-                btnEditar.setDisable (false);
-                btnReporte.setDisable (false);
-                imgAgregar.setImage (new Image("/org/andersonlopez/images/add user.png")); 
+                btnEditar.setDisable(false);
+                btnReporte.setDisable(false);
+                imgAgregar.setImage(new Image("/org/andersonlopez/images/add user.png"));
                 imgEliminar.setImage(new Image("/org/andersonlopez/images/delete user.png"));
-                tipoDeOperaciones= MenuTipoProductosController.operaciones.NINGUNO;
+                tipoDeOperaciones = MenuTipoProductosController.operaciones.NINGUNO;
                 break;
             default:
-                if(tblTipoProducto.getSelectionModel().getSelectedItem() != null){
-                    int respuesta = JOptionPane.showConfirmDialog(null, "Confirmar si Elimina el registro", 
+                if (tblTipoProducto.getSelectionModel().getSelectedItem() != null) {
+                    int respuesta = JOptionPane.showConfirmDialog(null, "Confirmar si Elimina el registro",
                             "Eliminar Clientes", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                    if(respuesta == JOptionPane.YES_NO_OPTION){
-                        try{
+                    if (respuesta == JOptionPane.YES_NO_OPTION) {
+                        try {
                             PreparedStatement procedimiento = Conexion.getInstancia().getConexion().prepareCall(" {call sp_EliminarTipoProducto(?)}");
-                            procedimiento.setInt(1, ((TipoProducto) tblTipoProducto.getSelectionModel().getSelectedItem()).getCodigoTipoProducto()); procedimiento.execute();
-                            ListarTipo.remove (tblTipoProducto.getSelectionModel().getSelectedItem());
-                            
+                            procedimiento.setInt(1, ((TipoProducto) tblTipoProducto.getSelectionModel().getSelectedItem()).getCodigoTipoProducto());
+                            procedimiento.execute();
+                            ListarTipo.remove(tblTipoProducto.getSelectionModel().getSelectedItem());
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
-                    
-                }else
+
+                } else {
                     JOptionPane.showMessageDialog(null, "Debe de seleccionar un Elemento");
+                }
         }
     }
-    
-    public void Editar(){
-        switch (tipoDeOperaciones) { 
+
+    public void Editar() {
+        switch (tipoDeOperaciones) {
             case NINGUNO:
-                if (tblTipoProducto.getSelectionModel().getSelectedItem() != null) { 
+                if (tblTipoProducto.getSelectionModel().getSelectedItem() != null) {
                     btnEditar.setText("Actualizar");
-                    btnReporte.setText("Cancelar"); 
+                    btnReporte.setText("Cancelar");
                     btnAgregar.setDisable(true);
                     btnEliminar.setDisable(true);
                     imgEditar.setImage(new Image("/org/andersonlopez/images/add user.png"));
@@ -165,71 +184,73 @@ public class MenuTipoProductosController implements Initializable{
                     activarControles();
                     txtCodigoTipoProducto.setEditable(false);
                     tipoDeOperaciones = MenuTipoProductosController.operaciones.ACTUALIZAR;
-                }else 
+                } else {
                     JOptionPane.showMessageDialog(null, "Debe de seleccionar un Elemento");
+                }
                 break;
             case ACTUALIZAR:
                 Actualizar();
                 btnEditar.setText("Editar");
                 btnReporte.setText("Reporte");
                 btnAgregar.setDisable(false);
-                btnEliminar.setDisable (false);
-                imgEditar.setImage (new Image("/org/andersonlopez/images/edit user.png"));
-                imgReporte.setImage (new Image("/org/andersonlopez/images/usereport.png"));
+                btnEliminar.setDisable(false);
+                imgEditar.setImage(new Image("/org/andersonlopez/images/edit user.png"));
+                imgReporte.setImage(new Image("/org/andersonlopez/images/usereport.png"));
                 limpiarControles();
                 tipoDeOperaciones = MenuTipoProductosController.operaciones.NINGUNO;
                 CargarDatos();
-            break;
+                break;
         }
     }
-    
-    public void Actualizar(){
-        try{
+
+    public void Actualizar() {
+        try {
             PreparedStatement procedimiento = Conexion.getInstancia().getConexion().prepareCall(" {call sp_EditarTipoProducto(?, ?)}");
             TipoProducto registro = (TipoProducto) tblTipoProducto.getSelectionModel().getSelectedItem();
             registro.setDescripcion(txtDescripcion.getText());
             procedimiento.setInt(1, registro.getCodigoTipoProducto());
             procedimiento.setString(2, registro.getDescripcion());
             procedimiento.execute();
-            
-        }catch (Exception e) {
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
-    public void reporte (){
-        switch(tipoDeOperaciones){
+
+    public void reporte() {
+        switch (tipoDeOperaciones) {
             case ACTUALIZAR:
                 desactivarControles();
                 limpiarControles();
                 btnEditar.setText("Editar");
                 btnReporte.setText("Reporte");
                 btnAgregar.setDisable(false);
-                btnEliminar.setDisable (false);
+                btnEliminar.setDisable(false);
                 imgEditar.setImage(new Image("/org/andersonlopez/images/edit user.png"));
                 imgReporte.setImage(new Image("/org/andersonlopez/images/usereport.png"));
                 tipoDeOperaciones = MenuTipoProductosController.operaciones.NINGUNO;
 
         }
     }
-    
-    public void desactivarControles () {
-        txtCodigoTipoProducto.setEditable (false);
-        txtDescripcion.setEditable (false);
-        
+
+    public void desactivarControles() {
+        txtCodigoTipoProducto.setEditable(false);
+        txtDescripcion.setEditable(false);
+
     }
-    
-    public void activarControles () {
-        txtCodigoTipoProducto.setEditable (true);
+
+    public void activarControles() {
+        txtCodigoTipoProducto.setEditable(true);
         txtDescripcion.setEditable(true);
-        
+
     }
-    
-    public void limpiarControles () {
+
+    public void limpiarControles() {
         txtCodigoTipoProducto.clear();
         txtDescripcion.clear();
-        
+
     }
+
     public Main getEscenarioPrincipal() {
         return escenarioPrincipal;
     }
@@ -237,10 +258,10 @@ public class MenuTipoProductosController implements Initializable{
     public void setEscenarioPrincipal(Main escenarioPrincipal) {
         this.escenarioPrincipal = escenarioPrincipal;
     }
-    
+
     @FXML
-    public void clicRegresar (ActionEvent event){
-        if (event.getSource() == btnRegresar){
+    public void clicRegresar(ActionEvent event) {
+        if (event.getSource() == btnRegresar) {
             escenarioPrincipal.menuPrincipal();
         }
     }

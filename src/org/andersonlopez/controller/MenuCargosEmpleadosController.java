@@ -22,57 +22,80 @@ import org.andersonlopez.bean.CargoEmpleado;
 import org.andersonlopez.db.Conexion;
 import org.andersonlopez.system.Main;
 
-public class MenuCargosEmpleadosController implements Initializable{
+public class MenuCargosEmpleadosController implements Initializable {
+
     private Main escenarioPrincipal;
-    private enum operaciones {AGREGAR, ELIMINAR, ACTUALIZAR, CANCELAR, NINGUNO}
-        private operaciones tipoDeOperaciones = operaciones.NINGUNO;
-        private ObservableList<CargoEmpleado> ListarCargo;
-    @FXML private Button btnRegresar;
-    @FXML private TextField txtCodigoCargoEmpleado;
-    @FXML private TextField txtnombreCargo;
-    @FXML private TextField txtDescripcion;
-    @FXML private TableView tblCargosEmp;
-    @FXML private TableColumn colCodigoCargoEmpleado;
-    @FXML private TableColumn colNombreCargo;
-    @FXML private TableColumn colDes;
-    @FXML private Button btnAgregar;
-    @FXML private Button btnEliminar;
-    @FXML private Button btnEditar;
-    @FXML private Button btnReporte;
-    @FXML private ImageView imgAgregar;
-    @FXML private ImageView imgEliminar;
-    @FXML private ImageView imgEditar;
-    @FXML private ImageView imgReporte;
-    
+
+    private enum operaciones {
+        AGREGAR, ELIMINAR, ACTUALIZAR, CANCELAR, NINGUNO
+    }
+    private operaciones tipoDeOperaciones = operaciones.NINGUNO;
+    private ObservableList<CargoEmpleado> ListarCargo;
+    @FXML
+    private Button btnRegresar;
+    @FXML
+    private TextField txtCodigoCargoEmpleado;
+    @FXML
+    private TextField txtnombreCargo;
+    @FXML
+    private TextField txtDescripcion;
+    @FXML
+    private TableView tblCargosEmp;
+    @FXML
+    private TableColumn colCodigoCargoEmpleado;
+    @FXML
+    private TableColumn colNombreCargo;
+    @FXML
+    private TableColumn colDes;
+    @FXML
+    private Button btnAgregar;
+    @FXML
+    private Button btnEliminar;
+    @FXML
+    private Button btnEditar;
+    @FXML
+    private Button btnReporte;
+    @FXML
+    private ImageView imgAgregar;
+    @FXML
+    private ImageView imgEliminar;
+    @FXML
+    private ImageView imgEditar;
+    @FXML
+    private ImageView imgReporte;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         CargarDatos();
     }
-    
-    public void CargarDatos(){
+
+    public void CargarDatos() {
         tblCargosEmp.setItems(getCargoEmpleado());
-        colCodigoCargoEmpleado.setCellValueFactory (new PropertyValueFactory<CargoEmpleado, Integer>("codigoCargoEmpleado"));
-        colNombreCargo.setCellValueFactory (new PropertyValueFactory<CargoEmpleado, String>("nombreCargo"));
-        colDes.setCellValueFactory (new PropertyValueFactory<CargoEmpleado, String>("descripcionCargo"));
+        colCodigoCargoEmpleado.setCellValueFactory(new PropertyValueFactory<CargoEmpleado, Integer>("codigoCargoEmpleado"));
+        colDes.setCellValueFactory(new PropertyValueFactory<CargoEmpleado, String>("descripcionCargo"));
+        colNombreCargo.setCellValueFactory(new PropertyValueFactory<CargoEmpleado, String>("nombreCargo"));
     }
-    
-        public void seleccionarElemento(){
-        txtCodigoCargoEmpleado.setText(String.valueOf(((CargoEmpleado) tblCargosEmp.getSelectionModel().getSelectedItem()).getCodigoCargoEmpleado()));
-        txtnombreCargo.setText(((CargoEmpleado) tblCargosEmp.getSelectionModel().getSelectedItem()).getNombreCargo());
-        txtDescripcion.setText(((CargoEmpleado) tblCargosEmp.getSelectionModel().getSelectedItem()).getDescripcionCargo());
-        
+
+    public void seleccionarElemento() {
+        Object selectedItem = tblCargosEmp.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            txtCodigoCargoEmpleado.setText(String.valueOf(((CargoEmpleado) selectedItem).getCodigoCargoEmpleado()));
+            txtnombreCargo.setText(((CargoEmpleado) selectedItem).getNombreCargo());
+            txtDescripcion.setText(((CargoEmpleado) selectedItem).getDescripcionCargo());
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha seleccionado ningún elemento.");
+        }
     }
-    
-    public ObservableList<CargoEmpleado> getCargoEmpleado(){
+
+    public ObservableList<CargoEmpleado> getCargoEmpleado() {
         ArrayList<CargoEmpleado> lista = new ArrayList<>();
-        try{
+        try {
             PreparedStatement procediiento = Conexion.getInstancia().getConexion().prepareCall("{call sp_listarCargoEmpleados()}");
             ResultSet resultado = procediiento.executeQuery();
-            while(resultado.next()){
-                lista.add(new CargoEmpleado (resultado.getInt("codigoCargoEmpleado"),
-                                                        resultado.getString("nombreCargo"),
-                                                        resultado.getString("descripcionCargo")
-
+            while (resultado.next()) {
+                lista.add(new CargoEmpleado(resultado.getInt("codigoCargoEmpleado"),
+                        resultado.getString("nombreCargo"),
+                        resultado.getString("descripcionCargo")
                 ));
             }
         } catch (Exception e) {
@@ -80,10 +103,11 @@ public class MenuCargosEmpleadosController implements Initializable{
         }
         return ListarCargo = FXCollections.observableArrayList(lista);
     }
-    
-    public void agregar(){
-        switch(tipoDeOperaciones){
+
+    public void agregar() {
+        switch (tipoDeOperaciones) {
             case NINGUNO:
+                limpiarControles();
                 activarControles();
                 btnAgregar.setText("Guardar");
                 btnEliminar.setText("Cancelar");
@@ -91,7 +115,7 @@ public class MenuCargosEmpleadosController implements Initializable{
                 btnReporte.setDisable(true);
                 imgAgregar.setImage(new Image("org/andersonlopez/images/Guardar.png"));
                 imgEliminar.setImage(new Image("org/andersonlopez/images/Cancelar.png"));
-                tipoDeOperaciones= MenuCargosEmpleadosController.operaciones.ACTUALIZAR;
+                tipoDeOperaciones = MenuCargosEmpleadosController.operaciones.ACTUALIZAR;
                 break;
             case ACTUALIZAR:
                 guardar();
@@ -99,73 +123,74 @@ public class MenuCargosEmpleadosController implements Initializable{
                 limpiarControles();
                 btnAgregar.setText("Agregar");
                 btnEliminar.setText("Eliminar");
-                btnEditar.setDisable (false);
-                btnReporte.setDisable (false);
-                imgAgregar.setImage (new Image("/org/andersonlopez/images/add user.png")); 
+                btnEditar.setDisable(false);
+                btnReporte.setDisable(false);
+                imgAgregar.setImage(new Image("/org/andersonlopez/images/add user.png"));
                 imgEliminar.setImage(new Image("/org/andersonlopez/images/delete user.png"));
-                tipoDeOperaciones= MenuCargosEmpleadosController.operaciones.NINGUNO;
+                tipoDeOperaciones = MenuCargosEmpleadosController.operaciones.NINGUNO;
         }
     }
-    
-    public void guardar (){
+
+    public void guardar() {
         CargoEmpleado registro = new CargoEmpleado();
         registro.setCodigoCargoEmpleado(Integer.parseInt(txtCodigoCargoEmpleado.getText()));
         registro.setNombreCargo(txtDescripcion.getText());
-        registro.setDescripcionCargo(txtDescripcion.getText());
-       try{
-            PreparedStatement procedimiento = Conexion.getInstancia().getConexion().prepareCall ("{call sp_agregarCargoEmpleado(?, ?, ?)}");
+        registro.setDescripcionCargo(txtnombreCargo.getText());
+        try {
+            PreparedStatement procedimiento = Conexion.getInstancia().getConexion().prepareCall("{call sp_agregarCargoEmpleado(?, ?, ?)}");
             procedimiento.setInt(1, registro.getCodigoCargoEmpleado());
-            procedimiento.setString(2, registro.getNombreCargo());
-            procedimiento.setString(3, registro.getDescripcionCargo());
+            procedimiento.setString(2, registro.getDescripcionCargo());
+            procedimiento.setString(3, registro.getNombreCargo());
             procedimiento.execute();
             ListarCargo.add(registro);
-            
-        } catch (Exception e){
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
     }
-    
-    public void Eliminar(){
-        switch(tipoDeOperaciones){
+
+    public void Eliminar() {
+        switch (tipoDeOperaciones) {
             case ACTUALIZAR:
                 desactivarControles();
                 limpiarControles();
                 btnAgregar.setText("Agregar");
                 btnEliminar.setText("Eliminar");
-                btnEditar.setDisable (false);
-                btnReporte.setDisable (false);
-                imgAgregar.setImage (new Image("/org/andersonlopez/images/add user.png")); 
+                btnEditar.setDisable(false);
+                btnReporte.setDisable(false);
+                imgAgregar.setImage(new Image("/org/andersonlopez/images/add user.png"));
                 imgEliminar.setImage(new Image("/org/andersonlopez/images/delete user.png"));
-                tipoDeOperaciones= MenuCargosEmpleadosController.operaciones.NINGUNO;
+                tipoDeOperaciones = MenuCargosEmpleadosController.operaciones.NINGUNO;
                 break;
             default:
-                if(tblCargosEmp.getSelectionModel().getSelectedItem() != null){
-                    int respuesta = JOptionPane.showConfirmDialog(null, "Confirmar si Elimina el registro", 
+                if (tblCargosEmp.getSelectionModel().getSelectedItem() != null) {
+                    int respuesta = JOptionPane.showConfirmDialog(null, "Confirmar si Elimina el registro",
                             "Eliminar Clientes", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                    if(respuesta == JOptionPane.YES_NO_OPTION){
-                        try{
+                    if (respuesta == JOptionPane.YES_NO_OPTION) {
+                        try {
                             PreparedStatement procedimiento = Conexion.getInstancia().getConexion().prepareCall(" {call sp_eliminarCargoEmpleado(?)}");
-                            procedimiento.setInt(1, ((CargoEmpleado) tblCargosEmp.getSelectionModel().getSelectedItem()).getCodigoCargoEmpleado()); 
+                            procedimiento.setInt(1, ((CargoEmpleado) tblCargosEmp.getSelectionModel().getSelectedItem()).getCodigoCargoEmpleado());
                             procedimiento.execute();
-                            ListarCargo.remove (tblCargosEmp.getSelectionModel().getSelectedItem());
-                            
+                            ListarCargo.remove(tblCargosEmp.getSelectionModel().getSelectedItem());
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
-                    
-                }else
+
+                } else {
                     JOptionPane.showMessageDialog(null, "Debe de seleccionar un Elemento");
+                }
         }
     }
-    
-    public void Editar(){
-        switch (tipoDeOperaciones) { 
+
+    public void Editar() {
+        switch (tipoDeOperaciones) {
             case NINGUNO:
-                if (tblCargosEmp.getSelectionModel().getSelectedItem() != null) { 
+                if (tblCargosEmp.getSelectionModel().getSelectedItem() != null) {
                     btnEditar.setText("Actualizar");
-                    btnReporte.setText("Cancelar"); 
+                    btnReporte.setText("Cancelar");
                     btnAgregar.setDisable(true);
                     btnEliminar.setDisable(true);
                     imgEditar.setImage(new Image("/org/andersonlopez/images/add user.png"));
@@ -173,75 +198,76 @@ public class MenuCargosEmpleadosController implements Initializable{
                     activarControles();
                     txtCodigoCargoEmpleado.setEditable(false);
                     tipoDeOperaciones = MenuCargosEmpleadosController.operaciones.ACTUALIZAR;
-                }else 
+                } else {
                     JOptionPane.showMessageDialog(null, "Debe de seleccionar un Elemento");
+                }
                 break;
             case ACTUALIZAR:
                 Actualizar();
                 btnEditar.setText("Editar");
                 btnReporte.setText("Reporte");
                 btnAgregar.setDisable(false);
-                btnEliminar.setDisable (false);
-                imgEditar.setImage (new Image("/org/andersonlopez/images/edit user.png"));
-                imgReporte.setImage (new Image("/org/andersonlopez/images/usereport.png"));
+                btnEliminar.setDisable(false);
+                imgEditar.setImage(new Image("/org/andersonlopez/images/edit user.png"));
+                imgReporte.setImage(new Image("/org/andersonlopez/images/usereport.png"));
                 limpiarControles();
                 tipoDeOperaciones = MenuCargosEmpleadosController.operaciones.NINGUNO;
                 CargarDatos();
-            break;
+                break;
         }
     }
-    
-    public void Actualizar(){
-        try{
+
+    public void Actualizar() {
+        try {
             PreparedStatement procedimiento = Conexion.getInstancia().getConexion().prepareCall(" {call sp_editarCargoEmpleado(?, ?, ?)}");
             CargoEmpleado registro = (CargoEmpleado) tblCargosEmp.getSelectionModel().getSelectedItem();
-            registro.setNombreCargo(txtDescripcion.getText());
             registro.setDescripcionCargo(txtDescripcion.getText());
+            registro.setNombreCargo(txtnombreCargo.getText());
             procedimiento.setInt(1, registro.getCodigoCargoEmpleado());
-            procedimiento.setString(2, registro.getNombreCargo());
-            procedimiento.setString(3, registro.getDescripcionCargo());
+            procedimiento.setString(2, registro.getDescripcionCargo());
+            procedimiento.setString(3, registro.getNombreCargo());
             procedimiento.execute();
-            
-        }catch (Exception e) {
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
-    public void reporte (){
-        switch(tipoDeOperaciones){
+
+    public void reporte() {
+        switch (tipoDeOperaciones) {
             case ACTUALIZAR:
                 desactivarControles();
                 limpiarControles();
                 btnEditar.setText("Editar");
                 btnReporte.setText("Reporte");
                 btnAgregar.setDisable(false);
-                btnEliminar.setDisable (false);
+                btnEliminar.setDisable(false);
                 imgEditar.setImage(new Image("/org/andersonlopez/images/edit user.png"));
                 imgReporte.setImage(new Image("/org/andersonlopez/images/usereport.png"));
                 tipoDeOperaciones = MenuCargosEmpleadosController.operaciones.NINGUNO;
 
         }
     }
-    
-    public void desactivarControles () {
-        txtCodigoCargoEmpleado.setEditable (false);
-        txtDescripcion.setEditable (false);
+
+    public void desactivarControles() {
+        txtCodigoCargoEmpleado.setEditable(false);
+        txtDescripcion.setEditable(false);
         txtnombreCargo.setEditable(false);
-        
+
     }
-    
-    public void activarControles () {
-        txtCodigoCargoEmpleado.setEditable (true);
+
+    public void activarControles() {
+        txtCodigoCargoEmpleado.setEditable(true);
         txtDescripcion.setEditable(true);
         txtnombreCargo.setEditable(true);
-        
+
     }
-    
-    public void limpiarControles () {
+
+    public void limpiarControles() {
         txtCodigoCargoEmpleado.clear();
         txtDescripcion.clear();
         txtnombreCargo.clear();
-        
+
     }
 
     public Main getEscenarioPrincipal() {
@@ -251,10 +277,10 @@ public class MenuCargosEmpleadosController implements Initializable{
     public void setEscenarioPrincipal(Main escenarioPrincipal) {
         this.escenarioPrincipal = escenarioPrincipal;
     }
-    
+
     @FXML
-    public void clicRegresar (ActionEvent event){
-        if (event.getSource() == btnRegresar){
+    public void clicRegresar(ActionEvent event) {
+        if (event.getSource() == btnRegresar) {
             escenarioPrincipal.menuPrincipal();
         }
     }

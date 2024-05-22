@@ -1,6 +1,7 @@
 package org.andersonlopez.bean;
 
 public class TipoProducto {
+
     private int codigoTipoProducto;
     private String descripcion;
 
@@ -28,8 +29,4 @@ public class TipoProducto {
         this.descripcion = descripcion;
     }
 
-    @Override
-    public String toString() {
-        return codigoTipoProducto + " | " + descripcion;
-    }
 }

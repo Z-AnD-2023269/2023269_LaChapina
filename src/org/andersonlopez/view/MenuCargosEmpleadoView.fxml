@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="1187.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.andersonlopez.controller.MenuCargosEmpleadosController">
    <children>
       <ImageView fitHeight="786.0" fitWidth="1188.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
@@ -113,10 +112,10 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label prefHeight="17.0" prefWidth="140.0" text="Nombre de Cargo" />
-            <TextField fx:id="txtnombreCargo" GridPane.columnIndex="1" />
-            <Label text="Codigo TP" GridPane.rowIndex="2" />
-            <TextField fx:id="txtCodigoCargoEmpleado" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label prefHeight="17.0" prefWidth="140.0" text="Nombre de Cargo" GridPane.rowIndex="2" />
+            <TextField fx:id="txtnombreCargo" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Codigo TP" />
+            <TextField fx:id="txtCodigoCargoEmpleado" GridPane.columnIndex="1" />
             <Label prefHeight="17.0" prefWidth="137.0" text="Descripcion de Cargo" GridPane.rowIndex="1" />
             <TextField fx:id="txtDescripcion" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>

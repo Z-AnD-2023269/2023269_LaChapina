@@ -1,6 +1,7 @@
 package org.andersonlopez.bean;
 
 public class CargoEmpleado {
+
     private int codigoCargoEmpleado;
     private String nombreCargo;
     private String descripcionCargo;
@@ -37,6 +38,5 @@ public class CargoEmpleado {
     public void setDescripcionCargo(String descripcionCargo) {
         this.descripcionCargo = descripcionCargo;
     }
-    
-    
-}   
+
+}

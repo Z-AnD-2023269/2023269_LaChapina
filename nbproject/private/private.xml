@@ -5,7 +5,7 @@
             <url>src/org/andersonlopez/bean/CargoEmpleado.java</url>
             <bookmark id="1">
                 <name/>
-                <line>5</line>
+                <line>6</line>
                 <key/>
             </bookmark>
         </file>
@@ -14,8 +14,13 @@
         <group>
             <file>file:/C:/Users/SHEILY%20LOPEZ/OneDrive/Escritorio/Repositorio%20Casa/2023269_LaChapina/src/org/andersonlopez/db/Conexion.java</file>
             <file>file:/C:/Users/SHEILY%20LOPEZ/OneDrive/Escritorio/Repositorio%20Casa/2023269_LaChapina/src/org/andersonlopez/controller/MenuTipoProductosController.java</file>
+            <file>file:/C:/Users/SHEILY%20LOPEZ/OneDrive/Escritorio/Repositorio%20Casa/2023269_LaChapina/src/org/andersonlopez/bean/TipoProducto.java</file>
+            <file>file:/C:/Users/SHEILY%20LOPEZ/OneDrive/Escritorio/Repositorio%20Casa/2023269_LaChapina/src/org/andersonlopez/controller/MenuProductosController.java</file>
             <file>file:/C:/Users/SHEILY%20LOPEZ/OneDrive/Escritorio/Repositorio%20Casa/2023269_LaChapina/src/org/andersonlopez/controller/MenuCargosEmpleadosController.java</file>
             <file>file:/C:/Users/SHEILY%20LOPEZ/OneDrive/Escritorio/Repositorio%20Casa/2023269_LaChapina/src/org/andersonlopez/bean/Compras.java</file>
+            <file>file:/C:/Users/SHEILY%20LOPEZ/OneDrive/Escritorio/Repositorio%20Casa/2023269_LaChapina/src/org/andersonlopez/system/Main.java</file>
+            <file>file:/C:/Users/SHEILY%20LOPEZ/OneDrive/Escritorio/Repositorio%20Casa/2023269_LaChapina/src/org/andersonlopez/controller/MenuClientesController.java</file>
+            <file>file:/C:/Users/SHEILY%20LOPEZ/OneDrive/Escritorio/Repositorio%20Casa/2023269_LaChapina/src/org/andersonlopez/controller/MenuPrincipalController.java</file>
             <file>file:/C:/Users/SHEILY%20LOPEZ/OneDrive/Escritorio/Repositorio%20Casa/2023269_LaChapina/src/org/andersonlopez/bean/CargoEmpleado.java</file>
             <file>file:/C:/Users/SHEILY%20LOPEZ/OneDrive/Escritorio/Repositorio%20Casa/2023269_LaChapina/src/org/andersonlopez/controller/MenuComprasController.java</file>
         </group>
