@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="786.0" prefWidth="1196.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.andersonlopez.controller.EmailProveedorController">
+   <children>
+      <ImageView fitHeight="790.0" fitWidth="1263.0" layoutX="1.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/EmaildeProveedor.png" />
+         </image>
+      </ImageView>
+      <GridPane layoutX="60.0" layoutY="329.0" prefHeight="417.0" prefWidth="236.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregar" prefHeight="149.0" prefWidth="262.0" stylesheets="@../resource/LaChapinaCSS.css" text="Agregar" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
+               <graphic>
+                  <ImageView fx:id="imgAgregar" fitHeight="59.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/add%20user.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <styleClass>
+                  <String fx:value="button3" />
+                  <String fx:value="button2" />
+               </styleClass>
+            </Button>
+            <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminar" onMouseClicked="#seleccionarElemento" prefHeight="119.0" prefWidth="267.0" stylesheets="@../resource/LaChapinaCSS.css" text="Eliminar" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" GridPane.rowIndex="1">
+               <graphic>
+                  <ImageView fx:id="imgEliminar" fitHeight="63.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/delete%20user.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <styleClass>
+                  <String fx:value="button3" />
+                  <String fx:value="button2" />
+               </styleClass>
+            </Button>
+            <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#editar" prefHeight="115.0" prefWidth="267.0" stylesheets="@../resource/LaChapinaCSS.css" text="Editar" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" GridPane.rowIndex="2">
+               <graphic>
+                  <ImageView fx:id="imgEditar" fitHeight="59.0" fitWidth="93.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/edit%20user.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <styleClass>
+                  <String fx:value="button3" />
+                  <String fx:value="button2" />
+               </styleClass>
+            </Button>
+            <Button fx:id="btnReporte" mnemonicParsing="false" onAction="#reporte" prefHeight="177.0" prefWidth="335.0" stylesheets="@../resource/LaChapinaCSS.css" text="Reporte" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" GridPane.rowIndex="3">
+               <graphic>
+                  <ImageView fx:id="imgReporte" fitHeight="62.0" fitWidth="122.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/usereport.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <styleClass>
+                  <String fx:value="button3" />
+                  <String fx:value="button2" />
+               </styleClass>
+            </Button>
+         </children>
+      </GridPane>
+      <GridPane layoutX="364.0" layoutY="126.0" prefHeight="124.0" prefWidth="455.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="178.0" minWidth="10.0" prefWidth="105.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="10.0" prefWidth="350.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label prefHeight="17.0" prefWidth="60.0" text="Nombre" />
+            <TextField fx:id="txtNombreC" GridPane.columnIndex="1" />
+            <Label text="Correo" GridPane.rowIndex="2" />
+            <Label text="Apellido" GridPane.rowIndex="1" />
+            <TextField fx:id="txtApellidoC" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtCorreoC" prefHeight="25.0" prefWidth="249.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Direccion" GridPane.rowIndex="3" />
+            <TextField fx:id="txtDireccionC" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+         </children>
+      </GridPane>
+      <GridPane layoutX="364.0" layoutY="250.0" prefHeight="67.0" prefWidth="455.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="111.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="66.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="162.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label text="NIT" />
+            <Label prefHeight="17.0" prefWidth="43.0" text="Codigo" GridPane.rowIndex="1" />
+            <TextField fx:id="txtNit" GridPane.columnIndex="1" />
+            <TextField fx:id="txtCodigoC" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label prefHeight="17.0" prefWidth="59.0" text="  Telefono" GridPane.columnIndex="2" />
+            <TextField fx:id="txtTelefonoC" GridPane.columnIndex="3" />
+         </children>
+      </GridPane>
+      <TableView fx:id="tblClientes" layoutX="307.0" layoutY="329.0" onMouseClicked="#seleccionarElemento" prefHeight="417.0" prefWidth="870.0" stylesheets="@../resource/LaChapinaCSS.css">
+         <columns>
+            <TableColumn fx:id="colCodigoC" prefWidth="111.0" text="codigoCliente" />
+            <TableColumn fx:id="colNombreC" prefWidth="111.0" text="nombreCliente" />
+            <TableColumn fx:id="colApellidoC" prefWidth="111.0" text="apellidoCliente" />
+            <TableColumn fx:id="colNit" prefWidth="111.0" text="NITcliente" />
+            <TableColumn fx:id="colTefelonoC" prefWidth="111.0" text="telefonoCliente" />
+            <TableColumn fx:id="colDireccionC" prefWidth="111.0" text="direccionCliente" />
+            <TableColumn fx:id="colCorreoC" prefWidth="111.0" text="correoCliente" />
+         </columns>
+      </TableView>
+      <Button fx:id="btnRegresar" layoutX="63.0" layoutY="242.0" mnemonicParsing="false" onAction="#clicRegresar" prefHeight="82.0" prefWidth="230.0" stylesheets="@../resource/LaChapinaCSS.css">
+         <graphic>
+            <ImageView fitHeight="41.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/Regresar.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>

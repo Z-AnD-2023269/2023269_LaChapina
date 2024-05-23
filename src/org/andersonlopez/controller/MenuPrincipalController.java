@@ -24,6 +24,20 @@ public class MenuPrincipalController implements Initializable {
     private MenuItem btnTipoPr;
     @FXML
     private MenuItem btnCompras;
+    @FXML
+    private MenuItem btnProductos;
+    @FXML
+    private MenuItem btnDetCompra;
+    @FXML
+    private MenuItem btnEmpleados;
+    @FXML
+    private MenuItem btnFactura;
+    @FXML
+    private MenuItem btnDetFactura;
+    @FXML
+    private MenuItem btnTelProveedores;
+    @FXML
+    private MenuItem btnEmailProveedores;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -83,4 +97,54 @@ public class MenuPrincipalController implements Initializable {
             escenarioPrincipal.menuCompras();
         }
     }
+    
+    @FXML
+    public void clicProductos(ActionEvent event) {
+        if (event.getSource() == btnProductos) {
+            escenarioPrincipal.menuProducto();
+        }
+    }
+
+    @FXML
+    public void clicDetCompra(ActionEvent event) {
+        if (event.getSource() == btnDetCompra) {
+            escenarioPrincipal.menuDetCompra();
+        }
+    }
+
+    @FXML
+    public void clicEmpleados(ActionEvent event) {
+        if (event.getSource() == btnEmpleados) {
+            escenarioPrincipal.menuEmpleados();
+        }
+    }
+
+    @FXML
+    public void clicFactura(ActionEvent event) {
+        if (event.getSource() == btnFactura) {
+            escenarioPrincipal.menuFactura();
+        }
+    }
+
+    @FXML
+    public void clicDetFactura(ActionEvent event) {
+        if (event.getSource() == btnDetFactura) {
+            escenarioPrincipal.menuDetFactura();
+        }
+    }
+
+    @FXML
+    public void clicTelProveedores(ActionEvent event) {
+        if (event.getSource() == btnTelProveedores) {
+            escenarioPrincipal.menuTelProveedores();
+        }
+    }
+
+    @FXML
+    public void clicEmailProveedores(ActionEvent event) {
+        if (event.getSource() == btnEmailProveedores) {
+            escenarioPrincipal.menuEmailProveedores();
+        }
+    }
+
 }

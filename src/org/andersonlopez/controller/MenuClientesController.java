@@ -18,9 +18,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javax.swing.JOptionPane;
-import org.andersonlopez.bean.Clientes;
 import org.andersonlopez.db.Conexion;
 import org.andersonlopez.system.Main;
+import org.andersonlopez.bean.Clientes;
 
 public class MenuClientesController implements Initializable {
 

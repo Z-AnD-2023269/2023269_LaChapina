@@ -525,6 +525,38 @@ END $$
 
 DELIMITER ;
 
+DELIMITER $$
+CREATE TRIGGER before_insert_productos
+	BEFORE INSERT ON Productos
+	FOR EACH ROW
+		BEGIN
+			IF NEW.precioUnitario IS NULL THEN
+				SET NEW.precioUnitario = 0.00;
+			END IF;
+
+			IF NEW.precioDocena IS NULL THEN
+				SET NEW.precioDocena = 0.00;
+			END IF;
+
+			IF NEW.precioMayor IS NULL THEN
+				SET NEW.precioMayor = 0.00;
+			END IF;
+		END$$
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER before_insert_productos_imagen
+BEFORE INSERT ON Productos
+FOR EACH ROW
+BEGIN
+    IF NEW.imagenProducto IS NULL THEN
+        SET NEW.imagenProducto = 'Default.png';
+    END IF;
+END$$
+
+DELIMITER ;
+
  -- -------------------------- Productos  Procedimiento Almacenados -----------------------------
  -- CRUD PRODUCTOS
  -- ---------------------------Agregar Producto-----------------------------
@@ -717,6 +749,32 @@ Delimiter $$
     End $$
 Delimiter ;
 
+DELIMITER $$
+
+CREATE TRIGGER before_insert_detalle_compra
+	BEFORE INSERT ON DetalleCompra
+	FOR EACH ROW
+		BEGIN
+			-- Calcula precios y existencia
+			DECLARE totalDetalle DECIMAL(10,2);
+			DECLARE nuevoPrecioUnitario DECIMAL(10,2);
+			DECLARE nuevoPrecioDocena DECIMAL(10,2);
+			DECLARE nuevoPrecioMayor DECIMAL(10,2);
+
+			SET totalDetalle = NEW.costoUnitario * NEW.cantidad;
+			SET nuevoPrecioUnitario = NEW.costoUnitario * 1.40;
+			SET nuevoPrecioDocena = NEW.costoUnitario * 1.35;
+			SET nuevoPrecioMayor = NEW.costoUnitario * 1.25;
+
+			UPDATE Productos
+			SET precioUnitario = nuevoPrecioUnitario,
+				precioDocena = nuevoPrecioDocena,
+				precioMayor = nuevoPrecioMayor,
+				existencia = existencia + NEW.cantidad
+			WHERE codigoProducto = NEW.codigoProducto;
+		END$$
+DELIMITER ;
+
 -- -----------------------DetalleCompra Procedimientos Almacenados ------------------------
 -- CRUD DetalleCompra
 -- ---------------------------Agregar DetalleCompra-----------------------------
@@ -735,6 +793,24 @@ END $$
 DELIMITER ;
 
 CALL sp_AgregarDetalleCompra(1, 10.50, 5, 'P001', 1); 
+
+DELIMITER $$
+
+CREATE TRIGGER after_insert_detalle_compra
+	AFTER INSERT ON DetalleCompra
+	FOR EACH ROW
+		BEGIN
+			DECLARE nuevoTotal DECIMAL(10,2);
+
+			SELECT SUM(costoUnitario * cantidad) INTO nuevoTotal
+			FROM DetalleCompra
+			WHERE numeroDocumento = NEW.numeroDocumento;
+
+			UPDATE Compras
+			SET totalDocumento = nuevoTotal
+			WHERE numeroDocumento = NEW.numeroDocumento;
+		END$$
+DELIMITER ;
 
 -- ---------------------------Listar DetalleCompra-----------------------------
 DELIMITER $$
@@ -926,7 +1002,21 @@ BEGIN
 END $$
 DELIMITER ;
 
+DELIMITER $$
 
+CREATE TRIGGER before_insert_detalle_factura
+	BEFORE INSERT ON DetalleFactura
+	FOR EACH ROW
+		BEGIN
+			DECLARE precio DECIMAL(10,2);
+
+			SELECT precioUnitario INTO precio
+			FROM Productos
+			WHERE codigoProducto = NEW.codigoProducto;
+
+			SET NEW.precioUnitario = precio;
+		END$$
+DELIMITER ;
 -- -----------------------DetalleFactura Procedimientos Almacenados ------------------------
 -- CRUD DetalleFactura
 -- ---------------------------Agregar DetalleFactura-----------------------------
@@ -945,6 +1035,23 @@ END $$
 DELIMITER ;
 
 CALL sp_AgregarDetalleFactura(1, 5.00, 2, 1, 'P001');
+
+DELIMITER $$
+CREATE TRIGGER after_insert_detalle_factura
+	AFTER INSERT ON DetalleFactura
+	FOR EACH ROW
+		BEGIN
+			DECLARE nuevoTotal DECIMAL(10,2);
+
+			SELECT SUM(precioUnitario * cantidad) INTO nuevoTotal
+			FROM DetalleFactura
+			WHERE numeroFactura = NEW.numeroFactura;
+
+			UPDATE Factura
+			SET totalFactura = nuevoTotal
+			WHERE numeroFactura = NEW.numeroFactura;
+		END$$
+DELIMITER ;
 
 -- ---------------------------Listar DetalleFactura-----------------------------
 DELIMITER $$
