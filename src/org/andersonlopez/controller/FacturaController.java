@@ -105,8 +105,6 @@ public class FacturaController implements Initializable {
             txtFechaFactura.setText(facturaSeleccionada.getFechaFactura());
             txtCodigoCliente.setText(String.valueOf(facturaSeleccionada.getCodigoCliente()));
             txtCodigoEmpleado.setText(String.valueOf(facturaSeleccionada.getCodigoEmpleado()));
-        } else {
-            JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna factura");
         }
     }
 

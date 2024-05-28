@@ -99,15 +99,13 @@ public class DetalleFacturaController implements Initializable {
             txtCantidad.setText(String.valueOf(detalleFacturaSeleccionado.getCantidad()));
             txtNumeroFactura.setText(String.valueOf(detalleFacturaSeleccionado.getNumeroFactura()));
             txtCodigoProducto.setText(detalleFacturaSeleccionado.getCodigoProducto());
-        } else {
-            JOptionPane.showMessageDialog(null, "No se ha seleccionado ningún detalle de factura");
         }
     }
 
     public ObservableList<DetalleFactura> getDetalleFacturas() {
         ArrayList<DetalleFactura> lista = new ArrayList<>();
         try {
-            PreparedStatement procedimiento = Conexion.getInstancia().getConexion().prepareCall("{call sp_ListarDetallesFactura()}");
+            PreparedStatement procedimiento = Conexion.getInstancia().getConexion().prepareCall("{call sp_ListarDetalleFactura()}");
             ResultSet resultado = procedimiento.executeQuery();
             while (resultado.next()) {
                 lista.add(new DetalleFactura(

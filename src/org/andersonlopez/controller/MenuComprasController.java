@@ -91,9 +91,6 @@ public class MenuComprasController implements Initializable {
             txtNumeroDocumento.setText(String.valueOf(compraSeleccionada.getNumeroDocumento()));
             txtDescripcion.setText(compraSeleccionada.getDescripcion());
             txtTotalDocumento.setText(String.valueOf(compraSeleccionada.getTotalDocumento()));
-        } else {
-            JOptionPane.showMessageDialog(null, "No se ha seleccionado ningún elemento.");
-
         }
     }
 

@@ -82,8 +82,6 @@ public class MenuCargosEmpleadosController implements Initializable {
             txtCodigoCargoEmpleado.setText(String.valueOf(((CargoEmpleado) selectedItem).getCodigoCargoEmpleado()));
             txtnombreCargo.setText(((CargoEmpleado) selectedItem).getNombreCargo());
             txtDescripcion.setText(((CargoEmpleado) selectedItem).getDescripcionCargo());
-        } else {
-            JOptionPane.showMessageDialog(null, "No se ha seleccionado ningún elemento.");
         }
     }
 

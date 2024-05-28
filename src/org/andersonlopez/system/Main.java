@@ -72,7 +72,7 @@ public class Main extends Application {
 
     public void menuProgramador() {
         try {
-            MenuProgramadorController menuProgramadorView = (MenuProgramadorController) cambiarEscena("MenuProveedoresView.fxml", 1187, 790);
+            MenuProgramadorController menuProgramadorView = (MenuProgramadorController) cambiarEscena("MenuProgramadorView.fxml", 1187, 790);
             menuProgramadorView.setEscenarioPrincipal(this);
         } catch (Exception e) {
             e.printStackTrace();
@@ -117,7 +117,7 @@ public class Main extends Application {
     
         public void menuProducto() {
         try {
-            MenuProductosController menuTipoProductoView = (MenuProductosController) cambiarEscena("MenuProductoView.fxml", 1266, 786);
+            MenuProductosController menuTipoProductoView = (MenuProductosController) cambiarEscena("MenuProductoView.fxml", 1196, 786);
             menuTipoProductoView.setEscenarioPrincipal(this);
         } catch (Exception e) {
             e.printStackTrace();
@@ -126,7 +126,7 @@ public class Main extends Application {
 
         public void menuDetCompra() {
             try {
-                DetalleCompraController menuDetCompraView = (DetalleCompraController) cambiarEscena("MenuDetCompraView.fxml", 1266, 786);
+                DetalleCompraController menuDetCompraView = (DetalleCompraController) cambiarEscena("MenuDetCompraView.fxml", 1196, 786);
                 menuDetCompraView.setEscenarioPrincipal(this);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -135,7 +135,7 @@ public class Main extends Application {
 
         public void menuEmpleados() {
             try {
-                EmpleadosController menuEmpleadosView = (EmpleadosController) cambiarEscena("MenuEmpleadosView.fxml", 1266, 786);
+                EmpleadosController menuEmpleadosView = (EmpleadosController) cambiarEscena("MenuEmpleadosView.fxml", 1196, 786);
                 menuEmpleadosView.setEscenarioPrincipal(this);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -144,7 +144,7 @@ public class Main extends Application {
 
         public void menuFactura() {
             try {
-                FacturaController menuFacturaView = (FacturaController) cambiarEscena("MenuFacturaView.fxml", 1266, 786);
+                FacturaController menuFacturaView = (FacturaController) cambiarEscena("MenuFacturaView.fxml", 1196, 786);
                 menuFacturaView.setEscenarioPrincipal(this);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -153,7 +153,7 @@ public class Main extends Application {
 
         public void menuDetFactura() {
             try {
-                DetalleFacturaController menuDetFacturaView = (DetalleFacturaController) cambiarEscena("MenuDetFacturaView.fxml", 1266, 786);
+                DetalleFacturaController menuDetFacturaView = (DetalleFacturaController) cambiarEscena("MenuDetFacturaView.fxml", 1196, 786);
                 menuDetFacturaView.setEscenarioPrincipal(this);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -162,7 +162,7 @@ public class Main extends Application {
 
         public void menuTelProveedores() {
             try {
-                TelefonoProveedorController menuTelProveedoresView = (TelefonoProveedorController) cambiarEscena("MenTelProveedoresView.fxml", 1266, 786);
+                TelefonoProveedorController menuTelProveedoresView = (TelefonoProveedorController) cambiarEscena("MenTelProveedoresView.fxml", 1196, 790);
                 menuTelProveedoresView.setEscenarioPrincipal(this);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -171,7 +171,7 @@ public class Main extends Application {
 
         public void menuEmailProveedores() {
             try {
-                EmailProveedorController menuEmailProveedoresView = (EmailProveedorController) cambiarEscena("MenuEmailProveedoresView.fxml", 1266, 786);
+                EmailProveedorController menuEmailProveedoresView = (EmailProveedorController) cambiarEscena("MenuEmailProveedoresView.fxml", 1196, 786);
                 menuEmailProveedoresView.setEscenarioPrincipal(this);
             } catch (Exception e) {
                 e.printStackTrace();

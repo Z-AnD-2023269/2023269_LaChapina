@@ -87,5 +87,12 @@ public class Productos {
     public void setCodigoProveedor(int codigoProveedor) {
         this.codigoProveedor = codigoProveedor;
     }
+
+    @Override
+    public String toString() {
+        return "|" + getCodigoProducto();
+    }
+    
+    
     
 }

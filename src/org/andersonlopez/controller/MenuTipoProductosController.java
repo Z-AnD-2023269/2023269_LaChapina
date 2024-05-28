@@ -96,6 +96,7 @@ public class MenuTipoProductosController implements Initializable {
     public void agregar() {
         switch (tipoDeOperaciones) {
             case NINGUNO:
+                limpiarControles();
                 activarControles();
                 btnAgregar.setText("Guardar");
                 btnEliminar.setText("Cancelar");

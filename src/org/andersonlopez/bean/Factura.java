@@ -67,5 +67,10 @@ public class Factura {
     public int getCodigoEmpleado() {
         return codigoEmpleado;
     }
+
+    @Override
+    public String toString() {
+        return "|" +numeroFactura;
+    }
     
 }

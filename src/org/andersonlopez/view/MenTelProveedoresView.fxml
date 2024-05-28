@@ -2,6 +2,7 @@
 
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -102,11 +103,11 @@
             <Label prefHeight="17.0" prefWidth="126.0" text="codigoProveedor" GridPane.rowIndex="4" />
             <Label prefHeight="17.0" prefWidth="122.0" text="numeroPrincipal" GridPane.rowIndex="1" />
             <TextField fx:id="txtNumeroPrincipal" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="txtCodigoProveedor" prefHeight="25.0" prefWidth="249.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label prefHeight="17.0" prefWidth="140.0" text="numeroSecundario" GridPane.rowIndex="2" />
             <TextField fx:id="txtNumeroSecundario" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label prefHeight="17.0" prefWidth="128.0" text="observaciones" GridPane.rowIndex="3" />
             <TextField fx:id="txtObservaciones" prefHeight="25.0" prefWidth="249.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <ComboBox prefHeight="25.0" prefWidth="356.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
       <TableView fx:id="tblTelefonosProveedores" layoutX="307.0" layoutY="329.0" onMouseClicked="#seleccionarElemento" prefHeight="417.0" prefWidth="870.0" stylesheets="@../resource/LaChapinaCSS.css">
