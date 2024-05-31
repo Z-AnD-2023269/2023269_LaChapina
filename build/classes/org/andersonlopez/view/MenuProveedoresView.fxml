@@ -74,7 +74,7 @@
                   <String fx:value="button2" />
                </styleClass>
             </Button>
-            <Button fx:id="btnReportesP" mnemonicParsing="false" onAction="reportes" prefHeight="177.0" prefWidth="335.0" stylesheets="@../resource/LaChapinaCSS.css" text="Reporte" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" GridPane.rowIndex="3">
+            <Button fx:id="btnReportesP" mnemonicParsing="false" onAction="#reportes" prefHeight="177.0" prefWidth="335.0" stylesheets="@../resource/LaChapinaCSS.css" text="Reporte" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" GridPane.rowIndex="3">
                <graphic>
                   <ImageView fx:id="imgReporte" fitHeight="62.0" fitWidth="122.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -134,16 +134,16 @@
             <TextField fx:id="txtContactoP" GridPane.columnIndex="3" />
          </children>
       </GridPane>
-      <TableView fx:id="tvPoveedores" layoutX="216.0" layoutY="313.0" onMouseClicked="#seleccionarElemento" prefHeight="357.0" prefWidth="906.0" stylesheets="@../resource/LaChapinaCSS.css">
+    <TableView fx:id="tvPoveedores" layoutX="216.0" layoutY="313.0" onMouseClicked="#seleccionarElemento" prefHeight="357.0" prefWidth="919.0" stylesheets="@../resource/LaChapinaCSS.css">
          <columns>
-            <TableColumn fx:id="colCodP" minWidth="112.5" prefWidth="0.0" text="codigoProveedor" />
-            <TableColumn fx:id="colNITP" minWidth="112.5" prefWidth="0.0" text="NITproveedor" />
-            <TableColumn fx:id="colNomP" minWidth="112.5" prefWidth="0.0" text="nombreProveedor" />
-            <TableColumn fx:id="colApeP" minWidth="112.5" prefWidth="0.0" text="apellidoProveedor" />
-            <TableColumn fx:id="colDireP" minWidth="112.5" prefWidth="0.0" text="direccionProveedor" />
-            <TableColumn fx:id="colRazonSP" minWidth="112.5" prefWidth="0.0" text="razonSocial" />
-            <TableColumn fx:id="colContactoP" minWidth="112.5" prefWidth="0.0" text="paginaWeb" />
-            <TableColumn fx:id="colSitioWeb" minWidth="112.5" prefWidth="0.0" text="contactoPrincipal" />
+            <TableColumn fx:id="colCodP" minWidth="114.0" prefWidth="100.0" text="codigoProveedor" />
+            <TableColumn fx:id="colNITP" minWidth="114.0" prefWidth="100.0" text="NITProveedor" />
+            <TableColumn fx:id="colNomP" minWidth="114.0" prefWidth="100.0" text="nombreProveedor" />
+            <TableColumn fx:id="colApeP" minWidth="114.0" prefWidth="100.0" text="apellidoProveedor" />
+            <TableColumn fx:id="colDireP" minWidth="114.0" prefWidth="100.0" text="direccionProveedor" />
+            <TableColumn fx:id="colRazonSP" minWidth="114.0" prefWidth="100.0" text="razonSocial" />
+            <TableColumn fx:id="colContactoP" minWidth="114.0" prefWidth="100.0" text="contactoPrincipal" />
+            <TableColumn fx:id="colSitioWeb" minWidth="114.0" prefWidth="100.0" text="paginaWeb" />
          </columns>
       </TableView>
       <Button fx:id="btnRegresar" layoutX="1087.0" layoutY="703.0" mnemonicParsing="false" onAction="#clicRegresar" prefHeight="82.0" prefWidth="99.0" stylesheets="@../resource/LaChapinaCSS.css">

@@ -16,7 +16,7 @@ create table Clientes(
 
 create table Proveedores(
 	codigoProveedor int not null,
-    NITproveedor varchar(10) not null,
+    NITproveedor varchar(25) not null,
     nombreProveedor varchar(60),
     apellidoProveedor varchar(60),
     direccionProveedor varchar(150),
@@ -277,7 +277,7 @@ end $$
 delimiter ;
 
 call sp_Listarproveedor();
-.-- ---------------------Buscar Proveedores --------------------------------
+-- ---------------------Buscar Proveedores --------------------------------
 
 delimiter $$
 
@@ -312,13 +312,13 @@ end $$
 
 delimiter ;
 
-call sp_eliminarproveedor(1);
+-- call sp_eliminarproveedor(1);
 -- ----------------------------Editar Proveedor------------------------------------
 delimiter $$
 
 create procedure sp_editarProveedor (
     in _codigoproveedor int,
-    in _nitproveedor varchar(13),
+    in _nitproveedor varchar(80),
     in _nombresproveedor varchar(60),
     in _apellidosproveedor varchar(60),
     in _direccionproveedor varchar(150),

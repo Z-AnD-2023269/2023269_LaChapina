@@ -31,13 +31,14 @@ public class MenuProveedoresController implements Initializable {
     }
     private operaciones tipoDeOperaciones = operaciones.NINGUNO;
     private ObservableList<Proveedores> listaProveedores;
-    @FXML private TableView tvPoveedores;
+    
+    @FXML private TableView<Proveedores> tvPoveedores;
     @FXML private TableColumn colCodP;
     @FXML private TableColumn colNITP;
     @FXML private TableColumn colNomP;
     @FXML private TableColumn colApeP;
     @FXML private TableColumn colDireP;
-    @FXML private TableColumn colRazonS;
+    @FXML private TableColumn colRazonSP;
     @FXML private TableColumn colContactoP;
     @FXML private TableColumn colSitioWeb;
     @FXML private Button btnAgregarP;
@@ -72,20 +73,23 @@ public class MenuProveedoresController implements Initializable {
         colNomP.setCellValueFactory(new PropertyValueFactory<Proveedores, String>("nombreProveedor"));
         colApeP.setCellValueFactory(new PropertyValueFactory<Proveedores, String>("apellidoProveedor"));
         colDireP.setCellValueFactory(new PropertyValueFactory<Proveedores, String>("direccionProveedor"));
-        colRazonS.setCellValueFactory(new PropertyValueFactory<Proveedores, String>("razonSocial"));
+        colRazonSP.setCellValueFactory(new PropertyValueFactory<Proveedores, String>("razonSocial"));
         colContactoP.setCellValueFactory(new PropertyValueFactory<Proveedores, String>("contactoPrincipal"));
         colSitioWeb.setCellValueFactory(new PropertyValueFactory<Proveedores, String>("paginaWeb"));
     }
 
     public void seleccionarElemento() {
-        txtCodigoP.setText(String.valueOf(((Proveedores) tvPoveedores.getSelectionModel().getSelectedItem()).getCodigoProveedor()));
-        txtNITP.setText((((Proveedores) tvPoveedores.getSelectionModel().getSelectedItem()).getNITproveedor()));
-        txtNombresP.setText((((Proveedores) tvPoveedores.getSelectionModel().getSelectedItem()).getNombreProveedor()));
-        txtApellidosP.setText((((Proveedores) tvPoveedores.getSelectionModel().getSelectedItem()).getApellidoProveedor()));
-        txtDireccionP.setText((((Proveedores) tvPoveedores.getSelectionModel().getSelectedItem()).getDireccionProveedor()));
-        txtRazonSocial.setText((((Proveedores) tvPoveedores.getSelectionModel().getSelectedItem()).getRazonSocial()));
-        txtContactoP.setText((((Proveedores) tvPoveedores.getSelectionModel().getSelectedItem()).getContactoPrincipal()));
-        txtSitioWeb.setText((((Proveedores) tvPoveedores.getSelectionModel().getSelectedItem()).getPaginaWeb()));
+        Proveedores proveedorSeleccionado = tvPoveedores.getSelectionModel().getSelectedItem();
+        if (proveedorSeleccionado != null) {
+            txtCodigoP.setText(String.valueOf(proveedorSeleccionado.getCodigoProveedor()));
+            txtNITP.setText(proveedorSeleccionado.getNITproveedor());
+            txtNombresP.setText(proveedorSeleccionado.getNombreProveedor());
+            txtApellidosP.setText(proveedorSeleccionado.getApellidoProveedor());
+            txtDireccionP.setText(proveedorSeleccionado.getDireccionProveedor());
+            txtRazonSocial.setText(proveedorSeleccionado.getRazonSocial());
+            txtContactoP.setText(proveedorSeleccionado.getContactoPrincipal());
+            txtSitioWeb.setText(proveedorSeleccionado.getPaginaWeb());
+        }
     }
 
     public ObservableList<Proveedores> getProveedores() {
@@ -95,9 +99,9 @@ public class MenuProveedoresController implements Initializable {
             ResultSet resultado = procedimiento.executeQuery();
             while (resultado.next()) {
                 listaPro.add(new Proveedores(resultado.getInt("codigoProveedor"),
-                        resultado.getString("NITProveedor"),
-                        resultado.getString("nombresProveedor"),
-                        resultado.getString("apellidosProveedor"),
+                        resultado.getString("NITproveedor"),
+                        resultado.getString("nombreProveedor"),
+                        resultado.getString("apellidoProveedor"),
                         resultado.getString("direccionProveedor"),
                         resultado.getString("razonSocial"),
                         resultado.getString("contactoPrincipal"),
@@ -107,9 +111,9 @@ public class MenuProveedoresController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return listaProveedores = FXCollections.observableList(listaPro);
+        return FXCollections.observableList(listaPro);
     }
-
+    
     public void Agregar() {
         switch (tipoDeOperaciones) {
             case NINGUNO:
@@ -151,7 +155,7 @@ public class MenuProveedoresController implements Initializable {
         registro.setPaginaWeb(txtSitioWeb.getText());
 
         try {
-            PreparedStatement procedimiento = Conexion.getInstancia().getConexion().prepareCall("{call sp_agregarProveedor(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+            PreparedStatement procedimiento = Conexion.getInstancia().getConexion().prepareCall("{call sp_agregarProveedor(?, ?, ?, ?, ?, ?, ?, ?)}");
             procedimiento.setInt(1, registro.getCodigoProveedor());
             procedimiento.setString(2, registro.getNITproveedor());
             procedimiento.setString(3, registro.getNombreProveedor());
@@ -181,7 +185,8 @@ public class MenuProveedoresController implements Initializable {
                 break;
             default:
                 if (tvPoveedores.getSelectionModel().getSelectedItem() != null) {
-                    int respuesta = JOptionPane.showConfirmDialog(null, "Confirmas la eliminacion del registro?", "Eliminar Proveedores", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    int respuesta = JOptionPane.showConfirmDialog(null, "Confirmas la eliminacion del registro?", 
+                            "Eliminar Proveedores", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
                     if (respuesta == JOptionPane.YES_NO_OPTION) {
                         try {

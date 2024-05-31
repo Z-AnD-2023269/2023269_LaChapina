@@ -72,8 +72,9 @@ public class MenuComprasController implements Initializable {
     private ImageView imgReporte;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources) { 
         CargarDatos();
+        desactivarControles();
     }
 
     public void CargarDatos() {
