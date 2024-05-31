@@ -132,9 +132,9 @@
             <TableColumn fx:id="colCodigoC" prefWidth="111.0" text="codigoCliente" />
           <TableColumn fx:id="colNombreC" prefWidth="111.0" text="nombreCliente" />
           <TableColumn fx:id="colApellidoC" prefWidth="111.0" text="apellidoCliente" />
-            <TableColumn fx:id="colNit" prefWidth="111.0" text="NITcliente" />
             <TableColumn fx:id="colTefelonoC" prefWidth="111.0" text="telefonoCliente" />
             <TableColumn fx:id="colDireccionC" prefWidth="111.0" text="direccionCliente" />
+            <TableColumn fx:id="colNit" prefWidth="111.0" text="NITcliente" />
             <TableColumn fx:id="colCorreoC" prefWidth="111.0" text="correoCliente" />
         </columns>
       </TableView>

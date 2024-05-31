@@ -165,11 +165,11 @@ CREATE PROCEDURE sp_ListarClientes()
 BEGIN 
 	SELECT
 		Clientes.codigoCliente,
+		Clientes.NITcliente,
 		Clientes.nombreCliente,
 		Clientes.apellidoCliente,
-		Clientes.telefonoCliente,
 		Clientes.direccionCliente,
-		Clientes.NITcliente,
+		Clientes.telefonoCliente,
         Clientes.correoCliente
 			FROM Clientes;
 END$$

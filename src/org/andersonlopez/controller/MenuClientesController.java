@@ -92,9 +92,9 @@ public class MenuClientesController implements Initializable {
             colCodigoC.setCellValueFactory(new PropertyValueFactory<Clientes, Integer>("codigoCliente"));
             colNombreC.setCellValueFactory(new PropertyValueFactory<Clientes, String>("nombreCliente"));
             colApellidoC.setCellValueFactory(new PropertyValueFactory<Clientes, String>("apellidoCliente"));
-            colNit.setCellValueFactory(new PropertyValueFactory<Clientes, String>("NITcliente"));
             colTefelonoC.setCellValueFactory(new PropertyValueFactory<Clientes, String>("telefonoCliente"));
             colDireccionC.setCellValueFactory(new PropertyValueFactory<Clientes, String>("direccionCliente"));
+            colNit.setCellValueFactory(new PropertyValueFactory<Clientes, String>("NITcliente"));
             colCorreoC.setCellValueFactory(new PropertyValueFactory<Clientes, String>("correoCliente"));
         } catch (Exception e) {
             e.printStackTrace();
@@ -111,8 +111,6 @@ public class MenuClientesController implements Initializable {
             txtTelefonoC.setText(clienteSeleccionado.getTelefonoCliente());
             txtDireccionC.setText(clienteSeleccionado.getDireccionCliente());
             txtCorreoC.setText(clienteSeleccionado.getCorreoCliente());
-        } else {
-            JOptionPane.showMessageDialog(null, "No se ha seleccionado ningún cliente");
         }
     }
 
@@ -124,11 +122,11 @@ public class MenuClientesController implements Initializable {
             while (resultado.next()) {
                 lista.add(new Clientes(
                         resultado.getInt("codigoCliente"),
+                        resultado.getString("NITcliente"),
                         resultado.getString("nombreCliente"),
                         resultado.getString("apellidoCliente"),
-                        resultado.getString("NITcliente"),
-                        resultado.getString("telefonoCliente"),
                         resultado.getString("direccionCliente"),
+                        resultado.getString("telefonoCliente"),
                         resultado.getString("correoCliente")
                 ));
             }
@@ -141,6 +139,7 @@ public class MenuClientesController implements Initializable {
     public void agregar() {
         switch (tipoDeOperaciones) {
             case NINGUNO:
+                limpiarControles();
                 activarControles();
                 btnAgregar.setText("Guardar");
                 btnEliminar.setText("Cancelar");
@@ -167,20 +166,20 @@ public class MenuClientesController implements Initializable {
     public void guardar() {
         Clientes registro = new Clientes();
         registro.setCodigoCliente(Integer.parseInt(txtCodigoC.getText()));
+        registro.setNITcliente(txtNit.getText());
         registro.setNombreCliente(txtNombreC.getText());
         registro.setApellidoCliente(txtApellidoC.getText());
-        registro.setNITcliente(txtNit.getText());
-        registro.setTelefonoCliente(txtTelefonoC.getText());
         registro.setDireccionCliente(txtDireccionC.getText());
+        registro.setTelefonoCliente(txtTelefonoC.getText());
         registro.setCorreoCliente(txtCorreoC.getText());
         try {
             PreparedStatement procedimiento = Conexion.getInstancia().getConexion().prepareCall("{call sp_AgregarCliente(?, ?, ?, ?, ?, ?, ?)}");
             procedimiento.setInt(1, registro.getCodigoCliente());
-            procedimiento.setString(2, registro.getNombreCliente());
-            procedimiento.setString(3, registro.getApellidoCliente());
-            procedimiento.setString(4, registro.getNITcliente());
-            procedimiento.setString(5, registro.getTelefonoCliente());
-            procedimiento.setString(6, registro.getDireccionCliente());
+            procedimiento.setString(2, registro.getNITcliente());
+            procedimiento.setString(3, registro.getNombreCliente());
+            procedimiento.setString(4, registro.getApellidoCliente());
+            procedimiento.setString(5, registro.getDireccionCliente());
+            procedimiento.setString(6, registro.getTelefonoCliente());
             procedimiento.setString(7, registro.getCorreoCliente());
             procedimiento.execute();
             listarClientes.add(registro);
@@ -245,6 +244,7 @@ public class MenuClientesController implements Initializable {
                 break;
             case ACTUALIZAR:
                 Actualizar();
+                limpiarControles();
                 btnEditar.setText("Editar");
                 btnReporte.setText("Reporte");
                 btnAgregar.setDisable(false);
@@ -262,18 +262,18 @@ public class MenuClientesController implements Initializable {
         try {
             PreparedStatement procedimiento = Conexion.getInstancia().getConexion().prepareCall(" {call sp_EditarCliente(?, ?, ?, ?, ?, ?, ?)}");
             Clientes registro = (Clientes) tblClientes.getSelectionModel().getSelectedItem();
+            registro.setNITcliente(txtNit.getText());
             registro.setNombreCliente(txtNombreC.getText());
             registro.setApellidoCliente(txtApellidoC.getText());
-            registro.setNITcliente(txtNit.getText());
-            registro.setTelefonoCliente(txtTelefonoC.getText());
             registro.setDireccionCliente(txtDireccionC.getText());
+            registro.setTelefonoCliente(txtTelefonoC.getText());
             registro.setCorreoCliente(txtCorreoC.getText());
             procedimiento.setInt(1, registro.getCodigoCliente());
-            procedimiento.setString(2, registro.getNombreCliente());
-            procedimiento.setString(3, registro.getApellidoCliente());
-            procedimiento.setString(4, registro.getNITcliente());
-            procedimiento.setString(5, registro.getTelefonoCliente());
-            procedimiento.setString(6, registro.getDireccionCliente());
+            procedimiento.setString(2, registro.getNITcliente());
+            procedimiento.setString(3, registro.getNombreCliente());
+            procedimiento.setString(4, registro.getApellidoCliente());
+            procedimiento.setString(5, registro.getDireccionCliente());
+            procedimiento.setString(6, registro.getTelefonoCliente());
             procedimiento.setString(7, registro.getCorreoCliente());
             procedimiento.execute();
 
