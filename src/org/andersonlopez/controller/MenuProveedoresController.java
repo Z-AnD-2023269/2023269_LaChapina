@@ -164,6 +164,7 @@ public class MenuProveedoresController implements Initializable {
             procedimiento.setString(6, registro.getRazonSocial());
             procedimiento.setString(7, registro.getContactoPrincipal());
             procedimiento.setString(8, registro.getPaginaWeb());
+            procedimiento.execute();
             listaProveedores.add(registro);
         } catch (Exception e) {
             e.printStackTrace();
@@ -276,6 +277,7 @@ public class MenuProveedoresController implements Initializable {
             procedimiento.setString(6, registro.getRazonSocial());
             procedimiento.setString(7, registro.getContactoPrincipal());
             procedimiento.setString(8, registro.getPaginaWeb());
+            procedimiento.execute();
         } catch (Exception e) {
             e.printStackTrace();
         }

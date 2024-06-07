@@ -342,7 +342,7 @@ end $$
 
 delimiter ;
 
-call sp_editarProveedor(1, '1234567890123', 'Juan', 'Perez', 'Calle 123', 'Razón Social', 'Contacto', 'www.proveedor.com');
+call sp_editarProveedor(1, '061400682', 'Juan', 'Perez', 'Calle 123', 'Razón Social', 'Contacto', 'www.proveedor.com');
 
 -- -----------------------Tipo de Producto  Procedimiento Almacenados ------------------------
 -- CRUD TIPO PRODUCTO
