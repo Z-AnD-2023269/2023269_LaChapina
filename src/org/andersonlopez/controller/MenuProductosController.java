@@ -25,7 +25,7 @@ import org.andersonlopez.bean.Productos;
 import org.andersonlopez.bean.Proveedores;
 import org.andersonlopez.bean.TipoProducto;
 import org.andersonlopez.db.Conexion;
-// import org.andersonlopez.report.GenerarReportes;
+import org.andersonlopez.reporteria.GenerarReportes;
 import org.andersonlopez.system.Main;
 
 /**
@@ -223,7 +223,7 @@ public class MenuProductosController implements Initializable {
     public void reporte() {
         switch (tipoDeOperaciones) {
             case NINGUNO:
-                //imprimirReporte();
+                imprimirReporte();
                 break;
             case ACTUALIZAR:
                 desactivarControllers();
@@ -239,11 +239,11 @@ public class MenuProductosController implements Initializable {
         }
     }
 
-   /* public void imprimirReporte() {
+   public void imprimirReporte() {
         Map parametros = new HashMap();
         parametros.put("codigoProducto", null);
-        GenerarReportes.mostrarReporte("ReporteProductos.jasper", "Reportes Productos", parametros);
-    }*/
+        GenerarReportes.mostrarReportes("ReporteProductos.jasper", "Reportes Productos", parametros);
+    }
 
     public TipoProducto buscarTipoProducto(int codigoTipoProducto) {
         TipoProducto resultado = null;
